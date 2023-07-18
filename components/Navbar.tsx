@@ -9,7 +9,7 @@ const Navbar : NextPage = () => {
 
     // const session = await getServerSession(options) 
     const { data: session, status } = useSession()
-    
+    console.log(session)
         
     return (
         <nav className='sticky top-0 w-full bg-[conic-gradient(at_top,_var(--tw-gradient-stops))] from-gray-900 via-gray-100 to-gray-900 z-30 flex gap-3 shadow-md py-5 px-4 items-center transition-all'>
