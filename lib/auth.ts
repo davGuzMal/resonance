@@ -31,8 +31,8 @@ export const authOptions : NextAuthOptions ={
                 const checkPassw = await bcrypt.compare(credentials?.password, user.password)
                 
                 if(checkPassw){
-
-                    return Promise.resolve(this.authorize)
+                   
+                    return user
                 } else{
                     return Promise.reject(this.authorize)
                 }
@@ -49,24 +49,16 @@ export const authOptions : NextAuthOptions ={
              clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
           })
     ],
-    callbacks: {
-        async signIn({ user, account, profile, email, credentials }) {
-            const isAllowedToSignIn = true
-            if (isAllowedToSignIn) {
-                return true
-            } else {
-                // Return false to display a default error message
-                return false
-                // Or you can return a URL to redirect to:
-                // return '/unauthorized'
-            }
-        },
-        async session({ session, user }) {
-          session.userId = user.id;
+    callbacks: {      
+
+     
+        async session({ session, user, token }) {
+          session.user = user       
         //   session.role = user.role;
           return Promise.resolve(session);
         },
         
       },
+      
     
 }
