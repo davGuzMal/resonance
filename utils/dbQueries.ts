@@ -1,4 +1,3 @@
-import axios from 'axios'
 import { Directory, NewUser, User } from '@/utils/interfaces';
 
 
@@ -16,7 +15,7 @@ export const createDirectory = async (data: Directory) => {
     .then(res => res.json())
     // await axios.post('')
 
-    return 'Post de ' + newDirectory + ' creado'
+    return newDirectory
 }
 
 export const createUser = async (data: NewUser) => {
@@ -36,25 +35,7 @@ export const createUser = async (data: NewUser) => {
     return newUser
 }
 
-export const getDirectories = async (id: string) => {
-    
-    const options = {
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        },
-        method: "GET",
-        body: id
-    }
-    const directories : Directory[] = await fetch('/api/directories/', options)
-    .then(res => res.json())
-    .then (resp => resp.directories)    
-    
-    console.log(directories)
-    return directories
-}
-
-export const getUser = async (id: String) => {
+export const getDirectories = async (id: string, email: string) => {
     
     // const options = {
     //     headers: {
@@ -62,11 +43,32 @@ export const getUser = async (id: String) => {
     //       'Content-Type': 'application/json'
     //     },
     //     method: "GET",
-    //     body: JSON.stringify(id)
-    // }
-    const user : User = await fetch('/api/user/'+id)
+    //     body: id
+    // }    
+    const directories : Directory[] = await fetch('/api/directories?id='+id+'&email='+email)
     .then(res => res.json())
-    .then (resp => resp.user)    
+    .then (resp => resp.directories)     
+    
+    return directories
+}
+export const getDirectoriesByEmail = async (email: string) => {    
+    
+    console.log(email)
+    const directories : Directory[] = await fetch('/api/directories?email='+email)//, options)
+    .then(res => res.json())
+    .then (resp => resp.directories)    
+    
+    
+    return directories
+}
+
+export const getUser = async (email: String) => {    
+    
+    const path = '/api/user/'+email
+    const user : User = await fetch(path)
+    .then(res => res.json())
+    .then (resp => resp.user)
+    // .then (data => console.log(data))    
     
     return user
 }

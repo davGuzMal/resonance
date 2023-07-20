@@ -1,19 +1,20 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from "../../../lib/prisma";
 
-export async function GET(request: Request) {
-    console.log(request.body)
+export async function GET(request: NextRequest) {
+    const { searchParams } = new URL(request.url)
+    const id = searchParams.get('id')
+    const email = searchParams.get('email')     
     
-    const {
-        userId                 
-    } = await request.json()  
-    console.log(userId)
         try {
-            if (userId) {
+            if (id) {
 
                 const directories = await prisma.directories.findMany({
                     where : {
-                        userId : userId
+                        userId : id,
+                        user : {
+                            email : email
+                        }
                     },
                     select: {
                         id: true,

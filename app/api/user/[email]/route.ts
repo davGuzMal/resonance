@@ -1,14 +1,15 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from "../../../../lib/prisma";
 
-export async function GET(request: NextRequest, { params }: { params: { userId: string } }) {
-    const id = params.userId
-        try {
-            if (id) {
-                
-                const user = await prisma.user.findFirst({
+export async function GET(request: NextRequest, { params }: { params: { email: string } }) {
+    
+    const email = params.email
+    try {
+        if (email) {            
+            
+                const user = await prisma.user.findUnique({
                     where : {
-                        id : id
+                        email : email
                     },
                     select: {
                         id: true,
@@ -20,15 +21,15 @@ export async function GET(request: NextRequest, { params }: { params: { userId: 
                         //     }
                         // }                     
                     }
-                })
-                
+                })                
                 return NextResponse.json({user}, {status : 200})
             }
             else{
-                return NextResponse.json({ message: "no enough data to get the info : userId" })
+                
+                return NextResponse.json({ message: "no enough data to get the info : email" })
             }
         } catch (error) {
-            console.log(error)
+            
             return NextResponse.json({ message: "Error: " + error })
         }        
 

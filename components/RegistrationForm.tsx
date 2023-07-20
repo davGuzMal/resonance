@@ -17,8 +17,8 @@ const RegistrationForm : NextComponentType = () => {
  
   const onSubmit : SubmitHandler<NewUser> = async(data) => {    
     
-    const newUser = await createUser(data)
-    if(newUser){
+    const newUser = await createUser(data)    
+    if(!newUser.message){
 
       redirectionAlert({
         icon: 'info',
@@ -35,7 +35,7 @@ const RegistrationForm : NextComponentType = () => {
       alerts({
         icon : 'error',
         title : 'Something went wrong',
-        text : "There is some issue with your user's creation, please try again"
+        text : newUser.message
       })
     }
   }

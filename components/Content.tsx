@@ -13,15 +13,8 @@ import Navbar from './Navbar';
 // }
 
 const Content : NextPage = () => {
-    const { data: session, status } = useSession()
-    console.log(session)
-    const id = "d74eb683-7621-488e-84e5-efbcb3b2feba"
-    const {
-        data: user,
-        error,
-        isLoading,
-        isSuccess
-    } = useQuery(['user'], ()=>getUser(id))
+    // const { data: session, status } = useSession()    
+    
 
     // const {
     //     data: directories,
@@ -34,22 +27,10 @@ const Content : NextPage = () => {
     
     
     return (
-        <div>
+        <main>
             <Navbar/>
-
-            <NewDirectory/>
-            <div>
-
-                <h1>Hello {session?.user?.name}</h1>
-                <p>Your actual directories are:</p>
-                <ul>
-                    { isLoading ? (<p>Loading...</p>
-                    ) : user?.directories ? (user.directories.map((dir, i) =>
-                        <li key={i}>{dir.title}</li>)
-                    ) : (null)}
-                </ul>
-            </div>
-        </div>
+            <NewDirectory/>            
+        </main>
     )
 }
 

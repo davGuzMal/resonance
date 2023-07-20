@@ -55,10 +55,9 @@ export const authOptions : NextAuthOptions ={
         async session({ session, user, token }) {
           session.user = user       
         //   session.role = user.role;
+        
           return Promise.resolve(session);
         },
-        
-      },
-      
-    
+          
+      },   
 }

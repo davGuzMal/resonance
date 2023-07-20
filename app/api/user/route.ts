@@ -13,18 +13,29 @@ export async function POST(request: Request) {
     
     const hash = await bcrypt.hash(password, 10);    
     try {
-        if(hash){
-            const newUser = await prisma.user.create({
-                data : {
-                    name : name,
-                    email : email,
-                    password : hash
-                }
-            })
-            return NextResponse.json({ newUser })
+        const alreadyUser = await prisma.user.findUnique({
+            where : {
+                email : email
+            }
+        })
+        if(alreadyUser) {
+            return NextResponse.json({ state:401, message: "There already exist a registered user with this email, please go to LogIn page" })
         }
-        else{
-            return NextResponse.json({ message: "It seems that something went wrong, please try again" })
+        else {
+
+            if(hash){
+                const newUser = await prisma.user.create({
+                    data : {
+                        name : name,
+                        email : email,
+                        password : hash
+                    }
+                })
+                return NextResponse.json({ newUser })
+            }
+            else{
+                return NextResponse.json({ state:401, message: "It seems that something went wrong, please try again" })
+            }
         }
     } catch (error) {
         console.log(error)

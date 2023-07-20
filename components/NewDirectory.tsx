@@ -1,8 +1,12 @@
 "use client";
 import { Directory } from '@/utils/interfaces';
-import { createDirectory } from '../utils/dbQueries';
-import { NextComponentType, GetStaticProps } from 'next'
+import { createDirectory, getUser } from '../utils/dbQueries';
+import { NextComponentType } from 'next'
+import { useQuery } from 'react-query';
+import {useSession} from 'next-auth/react'
 import { SubmitHandler, useForm } from "react-hook-form";
+import { useEffect } from 'react';
+import { alerts, redirectionAlert } from '@/utils/alerts';
 
 
 
@@ -14,15 +18,48 @@ const NewDirectory : NextComponentType = () => {
             content : ''
         }
     });
-
+    const { data: session, status } = useSession()
+    
+    const {
+        data: user,
+        error: error,
+        isLoading : isLoading,
+        isSuccess : isSuccess,
+        refetch
+    } = useQuery(['user'], ()=>getUser(session?.user?.email!))
+    
     const onSubmit : SubmitHandler<Directory> = async(data) => {
+        
+        console.log(user)
+        
         data = {
             ...data,
-            userId : "d74eb683-7621-488e-84e5-efbcb3b2feba"
+            userId : user?.id!
         }
-        console.log(data)
-        createDirectory(data)
+        const newDirectory = await createDirectory(data)
+        if(newDirectory){
+            console.log(newDirectory)
+            redirectionAlert({
+                    icon: 'info',
+                title: '<strong>New directory created</strong>',
+                html: 'You have added a new directory to your '+newDirectory.newDirectory.type+' category',
+                confirmButtonText: 'Got it!',
+                confirmButtonAriaLabel: 'Thumbs up, great!',
+                link: '/'
+            })
+        }
+        else{
+            alerts({
+                icon : 'error',
+                title : 'Something went wrong',
+                text : newDirectory.newDirectory.message
+              })
+        }
+        
     }
+    useEffect(() => {
+        refetch()
+    }, [isLoading])
     return (
         <div className="p-8 flex flex-col justify-evenly items-center bg-blue-100 rounded-lg md:flex-col">
             <div className="w-full flex gap-4 justify-center items-center md:w-3/6">
