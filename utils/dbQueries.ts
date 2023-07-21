@@ -35,7 +35,7 @@ export const createUser = async (data: NewUser) => {
     return newUser
 }
 
-export const getDirectories = async (id: string, email: string) => {
+export const getDirectories = async (id: string ='all', email: string='') => {
     
     // const options = {
     //     headers: {
@@ -44,20 +44,10 @@ export const getDirectories = async (id: string, email: string) => {
     //     },
     //     method: "GET",
     //     body: id
-    // }    
+    // }        
     const directories : Directory[] = await fetch('/api/directories?id='+id+'&email='+email)
     .then(res => res.json())
     .then (resp => resp.directories)     
-    
-    return directories
-}
-export const getDirectoriesByEmail = async (email: string) => {    
-    
-    console.log(email)
-    const directories : Directory[] = await fetch('/api/directories?email='+email)//, options)
-    .then(res => res.json())
-    .then (resp => resp.directories)    
-    
     
     return directories
 }
@@ -71,4 +61,14 @@ export const getUser = async (email: String) => {
     // .then (data => console.log(data))    
     
     return user
+}
+export const getAllUsers = async () => {    
+    
+    const path = '/api/user/'
+    const users : User[] = await fetch(path)
+    .then(res => res.json())
+    .then (resp => resp.users)
+    // .then (data => console.log(data))    
+    
+    return users
 }

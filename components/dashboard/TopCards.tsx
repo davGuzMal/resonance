@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import {useSession} from 'next-auth/react'
 import { getDirectories } from '@/utils/dbQueries'
+import { Directory } from '@/utils/interfaces'
 import { useQuery } from 'react-query'
 
 export const TopCards = () => {
@@ -13,6 +14,19 @@ export const TopCards = () => {
         refetch
     } = useQuery(['directories'], ()=>getDirectories(session?.user?.id!, session?.user?.email!))
     
+    const getMostRecentUpdate = (array : Directory[]) => {
+        if (array.length){
+
+            const dates = array.map(el => el.updateDate)
+            let mxDate = dates.reduce(function (a, b) {
+                return a > b ? a : b;
+            });
+            return mxDate.toString().slice(0, mxDate.toString().indexOf('T'))
+        }
+        else{
+            return null
+        }
+    }
     
 
     useEffect(() => {
@@ -28,7 +42,7 @@ export const TopCards = () => {
             <div className='lg:col-span-2 col-span-1 bg-white flex justify-between w-full border p-4 rounded-lg'>
                 <div className='flex flex-col w-full pb-4'>
                     <p className='text-2xl font-bold'>Notes</p>
-                    <p className='text-gray-600'>Last update : </p>
+                    <p className='text-gray-600'>Last update : {getMostRecentUpdate(directories?.filter(dir => dir.type ==='NOTE') as Directory[])}</p>
                 </div>
                 <p className='bg-green-200 flex justify-center items-center p-2 rounded-lg'>
                     <span className='text-green-700 text-lg'>{directories?.filter(dir => dir.type ==='NOTE').length}</span>
@@ -38,7 +52,7 @@ export const TopCards = () => {
             <div className='lg:col-span-2 col-span-1 bg-white flex justify-between w-full border p-4 rounded-lg'>
                 <div className='flex flex-col w-full pb-4'>
                     <p className='text-2xl font-bold'>Journal</p>
-                    <p className='text-gray-600'>Last update : </p>
+                    <p className='text-gray-600'>Last update : {getMostRecentUpdate(directories?.filter(dir => dir.type ==='JOURNAL') as Directory[])}</p>
                 </div>
                 <p className='bg-green-200 flex justify-center items-center p-2 rounded-lg'>
                     <span className='text-green-700 text-lg'>{directories?.filter(dir => dir.type ==='JOURNAL').length}</span>
@@ -47,7 +61,7 @@ export const TopCards = () => {
             <div className='lg:col-span-2 col-span-1 bg-white flex justify-between w-full border p-4 rounded-lg'>
                 <div className='flex flex-col w-full pb-4'>
                     <p className='text-2xl font-bold'>Confession</p>
-                    <p className='text-gray-600'>Last update : </p>
+                    <p className='text-gray-600'>Last update : {getMostRecentUpdate(directories?.filter(dir => dir.type ==='CONFESSION') as Directory[])}</p>
                 </div>
                 <p className='bg-green-200 flex justify-center items-center p-2 rounded-lg'>
                     <span className='text-green-700 text-lg'>{directories?.filter(dir => dir.type ==='CONFESSION').length}</span>
@@ -56,7 +70,7 @@ export const TopCards = () => {
             <div className='lg:col-span-2 col-span-1 bg-white flex justify-between w-full border p-4 rounded-lg'>
                 <div className='flex flex-col w-full pb-4'>
                     <p className='text-2xl font-bold'>Letter</p>
-                    <p className='text-gray-600'>Last update : </p>
+                    <p className='text-gray-600'>Last update : {getMostRecentUpdate(directories?.filter(dir => dir.type ==='LETTER') as Directory[])}</p>
                 </div>
                 <p className='bg-green-200 flex justify-center items-center p-2 rounded-lg'>
                     <span className='text-green-700 text-lg'>{directories?.filter(dir => dir.type ==='LETTER').length}</span>
@@ -65,7 +79,7 @@ export const TopCards = () => {
             <div className='lg:col-span-2 col-span-1 bg-white flex justify-between w-full border p-4 rounded-lg'>
                 <div className='flex flex-col w-full pb-4'>
                     <p className='text-2xl font-bold'>Business</p>
-                    <p className='text-gray-600'>Last update : </p>
+                    <p className='text-gray-600'>Last update : {getMostRecentUpdate(directories?.filter(dir => dir.type ==='BUSINESS') as Directory[])}</p>
                 </div>
                 <p className='bg-green-200 flex justify-center items-center p-2 rounded-lg'>
                     <span className='text-green-700 text-lg'>{directories?.filter(dir => dir.type ==='BUSINESS').length}</span>
@@ -74,7 +88,7 @@ export const TopCards = () => {
             <div className='flex bg-white justify-between w-full border p-4 rounded-lg'>
                 <div className='flex flex-col w-full pb-4'>
                     <p className='text-2xl font-bold'>Personal</p>
-                    <p className='text-gray-600'>Last update : </p>
+                    <p className='text-gray-600'>Last update : {getMostRecentUpdate(directories?.filter(dir => dir.type ==='PERSONAL') as Directory[])}</p>
                 </div>
                 <p className='bg-green-200 flex justify-center items-center p-2 rounded-lg'>
                     <span className='text-green-700 text-lg'>{directories?.filter(dir => dir.type ==='PERSONAL').length}</span>

@@ -1,12 +1,15 @@
 "use client"
 import {useSession} from 'next-auth/react'
 
+interface HeaderProps  {
+    page : string
+}
 
-const Header = () => {
+const Header = ({page} : HeaderProps) => {
     const { data: session, status } = useSession()
     return (
-        <div className="flex justify-between px-4 pt-4">
-            <h2>Dashboard</h2>
+        <div className="flex font-Rubik text-xl justify-between px-4 pt-4">
+            <h2>{page}</h2>
             {status !=='authenticated' ? (
                 
                 <h2>Welcome back</h2>

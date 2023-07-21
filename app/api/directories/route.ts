@@ -5,11 +5,11 @@ export async function GET(request: NextRequest) {
     const { searchParams } = new URL(request.url)
     const id = searchParams.get('id')
     const email = searchParams.get('email')     
-    
         try {
-            if (id) {
+            let directories
+            if (id && id !=='all') {
 
-                const directories = await prisma.directories.findMany({
+                directories = await prisma.directories.findMany({
                     where : {
                         userId : id,
                         user : {
@@ -21,6 +21,25 @@ export async function GET(request: NextRequest) {
                         title : true,
                         type : true,
                         content : true,
+                        updateDate: true,
+                        user: {
+                            select: {
+                                id : true,
+                                name : true,                                
+                            }
+                        }
+                    }
+                })
+                return NextResponse.json({directories}, { status : 200})
+            }
+            else if(id === 'all'){                
+                directories = await prisma.directories.findMany({                    
+                    select: {
+                        id: true,
+                        title : true,
+                        type : true,
+                        content : true,
+                        updateDate: true,
                         user: {
                             select: {
                                 id : true,
@@ -32,7 +51,7 @@ export async function GET(request: NextRequest) {
                 return NextResponse.json({directories}, { status : 200})
             }
             else{
-                return NextResponse.json({ message: "no enough data to get the info : userId" })
+                return NextResponse.json({ message: "no enough data to get the info : userId" }, {status:401})
             }
         } catch (error) {
             console.log(error)

@@ -3,7 +3,8 @@ export interface Directory {
     userId : string,
     type : string,
     title : string,
-    content : string
+    content : string,
+    updateDate: Date
 }
 export interface NewUser {    
     name: string,
@@ -16,5 +17,6 @@ export interface User {
     id : string,
     name: string,
     email: string,
+    emailVerified: boolean
     directories : Directory[]
 }
