@@ -62,10 +62,24 @@ export async function POST(request: Request) {
                         password : hash
                     }
                 })
+                const account = await prisma.account.create({
+                    data: {
+                      userId: newUser.id,
+                      type: "Credentials",
+                      provider: "Credentials",
+                      providerAccountId: newUser.id,
+                    },
+                  })
                 return NextResponse.json({ newUser })
+                if(newUser && account){
+                    return NextResponse.json({ newUser })
+                }
+                else{
+                    return NextResponse.json({message: "Unable to link account to created user profile" }, {status: 401})
+                }
             }
             else{
-                return NextResponse.json({ state:401, message: "It seems that something went wrong, please try again" })
+                return NextResponse.json({message: "It seems that something went wrong, please try again" }, {status: 401})
             }
         }
     } catch (error) {
