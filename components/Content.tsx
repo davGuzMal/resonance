@@ -1,11 +1,10 @@
 "use client"
 import {NextPage } from 'next'
 import NewDirectory from './NewDirectory';
-import { useSession} from 'next-auth/react'
-import { useState } from 'react';
-import { useQuery } from 'react-query'
-import { getUser } from '@/utils/dbQueries';
-import Navbar from './Navbar';
+
+import slides from "./lightbox/slides";
+
+import { Carousel } from './lightbox/Carousel';
 
 // interface contentProps {
 //     directories : Directory[]
@@ -14,22 +13,17 @@ import Navbar from './Navbar';
 
 const Content : NextPage = () => {
     // const { data: session, status } = useSession()    
+    // const {openLightbox, renderLightbox } = ShowLightBox();
     
-
-    // const {
-    //     data: directories,
-    //     error: errorD,
-    //     isLoading : isLoadingD,
-    //     isSuccess : isSuccessD
-    // } = useQuery(['directories'], ()=>getDirectories(id))
-    
-    
-    
-    
+    // useEffect(()=>{
+    //     openLightbox()
+    // }, [])
     return (
-        <main>
-            <Navbar/>
-            <NewDirectory/>            
+        <main className='bg-fibunacci bg-cover bg-no-repeat bg-fixed h-screen'>
+            <Carousel/>
+            {/* {renderLightbox({ slides })}         */}
+            {/* <NewDirectory/>          */}
+            
         </main>
     )
 }

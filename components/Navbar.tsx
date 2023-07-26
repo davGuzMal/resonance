@@ -1,69 +1,119 @@
 'use client'
-
 import {NextPage } from 'next'
 import Link from 'next/link';
 import {signIn, signOut, useSession} from 'next-auth/react'
 import { FiLogOut } from 'react-icons/fi'
+import { Avatar,  User, Dropdown, Text } from "@nextui-org/react";
 
-const Navbar : NextPage = () => {
+type NavbarProps = {
+    children: React.ReactNode;
+}
+
+const Navbar  = (props : NavbarProps) => {
 
     // const session = await getServerSession(options) 
     const { data: session, status } = useSession()    
         
     return (
-        <nav className='sticky top-0 w-full bg-[conic-gradient(at_top,_var(--tw-gradient-stops))] from-gray-900 via-gray-100 to-gray-900 z-30 flex gap-3 shadow-md py-5 px-4 items-center transition-all'>
-            
-                <div className="group flex justify-center items-center relative w-70 bg-transparent-200 cursor-pointer text-4xl">
-                    <Link className="" href={'/'}>
-                        <div className='font-Rubik transition-all  hover:drop-shadow-md group-hover:text-gray-100'>
-                            Reso
-                            <span className='text-white group-hover:text-black'>
-                                nance
-                            </span>
-                        </div>                        
-                    </Link>
-                    <div className="absolute top-0 -inset-full h-full w-1/2 z-5 block transform -skew-x-12 bg-gradient-to-r from-transparent to-white opacity-40 group-hover:animate-shine" />
-                </div>
-                <div className="flex ml-16 mr-4 w-full text-center justify-around font-medium uppercase font-Rubik transition-all">
+        <>
+        
+            <nav className='flex justify-between font-YsabeauInfant sticky top-0 w-full bg-[conic-gradient(at_top,_var(--tw-gradient-stops))] from-purple-200 via-gray-100 z-30 flex gap-3 shadow-md p-2 items-center transition-all m-2 rounded-lg'>
+                
+                    <div className="group flex justify-center items-center relative w-70 bg-transparent-200 cursor-pointer text-4xl">
+                        <Link className="text-black " href={'/'}>
+                            <div className='font-YsabeauInfant transition-all  hover:drop-shadow-md group-hover:text-purple-500'>
+                                Reso
+                                <span className='text-purple-500 group-hover:text-black'>
+                                    nance
+                                </span>
+                            </div>                        
+                        </Link>
+                        <div className="absolute top-0 -inset-full h-full w-1/2 z-5 block transform -skew-x-12 bg-gradient-to-r from-transparent to-white opacity-40 group-hover:animate-shine" />
+                    </div>
+                    <div className="flex ml-8 mr-2 w-[120vh] italic text-center justify-around font-medium uppercase transition-all">
+                                            
+                            <Link className='text-black hover:text-purple-700' href="/">Home</Link>                    
+                        
+                            <Link className='text-black hover:text-purple-700' href="/contact">Contact</Link>
+                        
+                            <Link className='text-black hover:text-purple-700' href="/about">About</Link>
+                        
+                        
+                    </div>
+                    <div className="italic text-lg ml-2 w-32 w-[30vh]">
+                        {status !== "authenticated" ? (
+                            <div className='flex justify-between'>
+                                
+                                <Link className='text-black hover:text-purple-700' href="/registration"> Registration</Link>                                 
+                                
+                                <p> | </p>
+                                <button
+                                className='hover:text-purple-700'
+                                onClick={() => signIn()}>
+                                    Log In 
+                                </button>                            
+                            </div>
+                        ) : (
+                            <div className='flex flex-row justify-between align-center items-center'>
+                                
+                                    <Dropdown>           
+                                        {session.user?.image ? (
+                                            <Dropdown.Trigger>
+                                                <User
+                                                    bordered
+                                                    as="button"
+                                                    size="lg"
+                                                    color="secondary"
+                                                    name={session?.user?.name?.slice(0, session.user.name.indexOf(' '))}
+                                                    description={session.user.email ? session.user.email : undefined}
+                                                    src={session?.user?.image}                                                     
+                                                />                                      
+                                            </Dropdown.Trigger>
+
+                                        ) : (
+                                            <Dropdown.Trigger> 
+                                                    <Avatar
+                                                        text={session?.user?.name?.slice(0,1)}
+                                                        color="secondary" 
+                                                        as='button'
+                                                        textColor="white" 
+                                                    >
+                                                        
+                                                    </Avatar>                                                
+                                            </Dropdown.Trigger>
+                                        )}                             
                                         
-                        <Link className='hover:text-white' href="/">Home</Link>                    
-                    
-                        <Link className='hover:text-white' href="/contact">Contact</Link>
-                    
-                        <Link className='hover:text-white' href="/about">About</Link>
-                    
-                    
-                </div>
-                <div className="font-Rubik ml-2 w-64">
-                    {status !== "authenticated" ? (
-                        <div className='flex justify-between'>
-                            
-                            <Link href="/registration"> Registration</Link>                                 
-                            
-                            <p> | </p>
-                            <button
-                            className='hover:text-white'
-                            onClick={() => signIn()}>
-                                Log In 
-                            </button>                            
-                        </div>
-                    ) : (
-                        <div className='flex flex-row justify-between align-center items-center'>                            
-                            <Link href='/dashboard'>
-                                <h3 className='mx-2'>
-                                    {session?.user?.name?.slice(0, session.user.name.indexOf(' '))}  
-                                </h3>
-                            </Link>
-                            <button
-                            className='hover:text-white'
-                            onClick={() => signOut()}>
-                                <FiLogOut/> 
-                            </button>
-                        </div>
-                    )}
-                </div>
-            
-        </nav>
+                                        <Dropdown.Menu aria-label="User Actions"  color='secondary'>
+                                            <Dropdown.Item key="profile" css={{ height: "$18" }}>
+                                                <Text b color="inherit" css={{ d: "flex" }}>
+                                                    Signed in as
+                                                </Text>
+                                                <Text b color="inherit" css={{ d: "flex" }}>
+                                                    {session.user?.email ? session.user.email : null}
+                                                </Text>
+                                            </Dropdown.Item>
+                                            <Dropdown.Item key="profile"><Link className='text-black' href='/dashboard/profile'>Profile</Link></Dropdown.Item>
+                                            <Dropdown.Item key="dashboard"><Link className='text-black' href='/dashboard'>Dashboard</Link></Dropdown.Item>
+                                            <Dropdown.Item key="directories"><Link className='text-black' href='/dashboard/directories'>Directories</Link></Dropdown.Item>
+                                            <Dropdown.Item key="logout" withDivider color="error"><button onClick={()=>signOut()}>Logout</button></Dropdown.Item>
+                                        </Dropdown.Menu>                                        
+                                    </Dropdown>                                    
+                                
+                                {/* <button
+                                className='hover:text-purple-700'
+                                onClick={() => signOut()}>
+                                    <FiLogOut/> 
+                                </button> */}
+                            </div>
+                        )}
+                    </div>
+                
+            </nav>
+            <main className='mx-2 rounded-lg w-full'>
+
+                {props.children}
+            </main>
+        </>
     )
 }
 

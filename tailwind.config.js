@@ -6,8 +6,12 @@ module.exports = {
     './app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
-    fontFamily: {
-      Rubik: ["Rubik", "sans-serif"],
+    fontFamily: {      
+      YsabeauInfant : ['Ysabeau Infant', "sans-serif"],
+      YsabeauOffice : ['Ysabeau Office', "sans-serif"],
+      EduSA : ['Edu SA Beginner'],
+      Lilita : ['Lilita One'],
+      Lugrasimo : ['Lugrasimo', 'cursive']
     },
     screens: {
       sm: "640px",
@@ -29,6 +33,10 @@ module.exports = {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
         'gradient-conic':
           'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
+        'entanglement' : "url('/img/qe.png')",
+        'stringTheory' : "url('/img/a.png')",
+        'mindfulness' : "url('/img/mindfulness.jpg')",
+        'fibunacci' : "url('/img/fibunacci.png')",
       },
     },
   },

@@ -2,8 +2,10 @@
 import type { NextPage } from 'next'
 import { SessionProvider } from 'next-auth/react';
 import { ReactQueryDevtools } from 'react-query/devtools'
+import { NextUIProvider } from '@nextui-org/react'
 import { QueryClient, QueryClientProvider } from 'react-query'
 import  Content  from "../components/Content"
+import Navbar from '@/components/Navbar';
 // import createDB from '@/utils/createBD';
 
 const Home : NextPage = () => {
@@ -14,9 +16,15 @@ const Home : NextPage = () => {
     <SessionProvider>
       <QueryClientProvider client={queryClient}>
         <ReactQueryDevtools />
-        <Content
-          // userauth = {session?.user?.name}
-        />
+          <NextUIProvider>
+
+            <Navbar>
+
+              <Content
+                // userauth = {session?.user?.name}
+              />
+            </Navbar>
+          </NextUIProvider>
       </QueryClientProvider>
     </SessionProvider>
     
