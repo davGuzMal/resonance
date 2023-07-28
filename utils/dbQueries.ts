@@ -34,6 +34,22 @@ export const createUser = async (data: NewUser) => {
 
     return newUser
 }
+export const updateUser = async (data: User) => {
+    
+    const options = {
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        method: "PUT",
+        body: JSON.stringify(data)
+    }
+    const User = await fetch('/api/user/', options)
+    .then(res => res.json())
+    // await axios.post('')
+
+    return User
+}
 
 export const getDirectories = async (id: string ='all', email: string='') => {
     

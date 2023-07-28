@@ -30,8 +30,7 @@ const NewDirectory : NextComponentType = () => {
     
     const onSubmit : SubmitHandler<Directory> = async(data) => {
         
-        console.log(user)
-        
+             
         data = {
             ...data,
             userId : user?.id!

@@ -87,3 +87,37 @@ export async function POST(request: Request) {
         return NextResponse.json({ message: "Error: " + error })
     }
 }
+
+export async function PUT(request: Request) {
+
+
+    const {
+        id,
+        name,
+        email,
+                         
+    } = await request.json()  
+    
+      
+    try {
+        const user = await prisma.user.update({
+            where : {
+                id : id
+            },
+            data : {
+                name : name,
+                email : email
+            }
+        })
+        if(user) {
+            return NextResponse.json({user}, {status:200} )
+        }
+        else {
+
+            return NextResponse.json({message: "It seems that something went wrong, please try again" }, {status: 401})
+        }
+    } catch (error) {
+        console.log(error)
+        return NextResponse.json({ message: "Error: " + error })
+    }
+}
