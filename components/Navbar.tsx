@@ -2,7 +2,7 @@
 import {NextPage } from 'next'
 import Link from 'next/link';
 import {signIn, signOut, useSession} from 'next-auth/react'
-import { FiLogOut } from 'react-icons/fi'
+import { IoAddCircle, IoAddCircleOutline } from 'react-icons/io5'
 import { Avatar,  User, Dropdown, Text } from "@nextui-org/react";
 
 type NavbarProps = {
@@ -36,7 +36,15 @@ const Navbar  = (props : NavbarProps) => {
                         
                             <Link className='text-black hover:text-purple-700' href="/contact">Contact</Link>
                         
-                            <Link className='text-black hover:text-purple-700' href="/about">About</Link>
+                            {session?.user ? (
+
+                                <Link className='flex text-black hover:text-purple-700' href="/createfile">
+                                    <IoAddCircleOutline/>
+                                    Add new file
+                                </Link>
+                            ) : (
+                                null
+                            )}
                         
                         
                     </div>

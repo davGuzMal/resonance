@@ -18,22 +18,15 @@ const NewDirectory : NextComponentType = () => {
             content : ''
         }
     });
-    const { data: session, status } = useSession()
+    const { data: session, status } = useSession()    
     
-    const {
-        data: user,
-        error: error,
-        isLoading : isLoading,
-        isSuccess : isSuccess,
-        refetch
-    } = useQuery(['user'], ()=>getUser(session?.user?.email!))
     
     const onSubmit : SubmitHandler<Directory> = async(data) => {
         
              
         data = {
             ...data,
-            userId : user?.id!
+            userId : session?.user?.id!
         }
         const newDirectory = await createDirectory(data)
         if(newDirectory){
@@ -56,89 +49,126 @@ const NewDirectory : NextComponentType = () => {
         }
         
     }
-    useEffect(() => {
-        refetch()
-    }, [isLoading])
+    // useEffect(() => {
+    //     refetch()
+    // }, [isLoading])
     return (
-        <div className="p-8 flex flex-col justify-evenly items-center bg-blue-100 rounded-lg md:flex-col">
-            <div className="w-full flex gap-4 justify-center items-center md:w-3/6">
-                    
-                <p className="text-md mb-2 md:text-xl md:text-center">
-                    Feel safe to know that all your directories are well secured in our 24/7
-                    monitored bank-file
+        <div className="p-8 flex flex justify-between items-center -inset -skew-y-3 bg-gradient-to-r from-purple-300 via-gray-100 rounded-lg">
+            <div className='skew-y-3 font-EduSA bg-gradient-to-r from-blue-100 via-gray-100 w-1/2 h-[65vh] p-4 m-4 rounded lg'>
+                <p className='text-3xl mt-8'>Journaling helps control your symptoms and improve your mood by:
+                    <ul className='list-disc mt-8'>
+                        <li className='text-xl'>Helping you <span>   </span>
+                        <span className="relative">
+                            <span className="block absolute -inset-0.5 -skew-y-3 bg-purple-500" aria-hidden="true"></span>
+                            <span className="relative text-white">prioritize</span>
+                        </span>
+                        <span>   </span>
+                        problems, fears, and concerns.</li>
+                        <li className='text-xl'>Tracking any symptoms day-to-day so that you can <span>   </span>
+                        <span className="relative">
+                            <span className="block absolute -inset-1 -skew-y-3 bg-purple-500" aria-hidden="true"></span>
+                            <span className="relative text-white">recognize</span>
+                        </span>
+                        <span>   </span>
+                        triggers and <span>   </span>
+                        <span className="relative">
+                            <span className="block absolute -inset-1 -skew-y-3 bg-purple-500" aria-hidden="true"></span>
+                            <span className="relative text-white">learn</span>
+                        </span>
+                        <span>   </span>
+                        ways to better control them</li>
+                        <li className='text-xl'>Providing an opportunity for <span>   </span>
+                        <span className="relative">
+                            <span className="block absolute -inset-1 -skew-y-3 bg-purple-500" aria-hidden="true"></span>
+                            <span className="relative text-white">positive self-talk</span>
+                        </span>
+                        <span>   </span>
+                        and identifying negative thoughts and behaviors.</li>
+                    </ul>                
                 </p>
+                
             </div>
-            <form className="w-full grid grid-cols-2 gap-2 items-center justify-center w-1/2 lg:gap-3"
-                    onSubmit={handleSubmit(onSubmit)}>
-                {/* TITLE */}
-                <div className="flex flex-col gap-1 mx-4 items-start justify-center">
+            <div className='skew-y-3 p-4 text-lg rounded-lg m-8 font-YsabeauInfant'>
+
+                <div className="w-full gap-4 justify-center items-center">
+                        
+                    <p className="text-xl font-YsabeauInfant mb-2 md:text-center">
+                        Feel safe to know that all your directories are well secured in our 24/7
+                        monitored bank-file
+                    </p>
+                </div>
+                <form className="grid grid-cols-2 w-full gap-4 justify-center items-center lg:gap-3"
+                        onSubmit={handleSubmit(onSubmit)}>
+                    {/* TITLE */}
+                    <div className="flex flex-col gap-1 mx-4 items-start justify-center  bg-red-100">
+                        <label className="label">
+                            Title:
+                        </label>
+                        <input                            
+                            {...register('title', {
+                                required: true,
+                            })}
+                            className="ring-2 ring-purple-300 ring-inset rounded-lg "
+                        />
+                        {errors.title?.type === 'required' ? (
+                            <p className="text-red-500 text-xs italic">
+                                Title is mandatory
+                            </p>
+                        ) : null}                        
+                    </div>
+                    {/* TYPE */}
+                    <div className="flex flex-col gap-1 mx-4 items-start justify-center  bg-red-100">
+                        <label className="label">
+                            Type:
+                        </label>
+                        <select
+                            placeholder="Type"
+                            {...register('type', {
+                                required: true,
+                            })}
+                            className="ring-2 ring-purple-300 ring-inset rounded-lg w-[30vh]"
+                            defaultValue="Note"
+                        >
+                        <option value="NOTE">Note</option>
+                        <option value="JOURNAL">Journal</option>
+                        <option value="CONFESSION">Confession</option>
+                        <option value="LETTER">Letter</option>
+                        <option value="PERSONAL">Personal</option>
+                        <option value="BUSINESS">Business</option>
+                        </select>
+                        {errors.type?.type === 'required' ? (
+                            <p className="text-red-500 text-xs italic">
+                                Type is mandatory
+                            </p>
+                        ) : null}                        
+                    </div>
+                    {/* CONTENT */}
+                    <div className='flex flex-col gap-1 col-span-2 mx-2 items-start justify-center  bg-red-100'>
                     <label className="label">
-                        Title:
-                    </label>
-                    <input
-                        placeholder="Title"
-                        {...register('title', {
-                            required: true,
-                        })}
-                        className="input"
-                    />
-                    {errors.title?.type === 'required' ? (
-                        <p className="text-red-500 text-xs italic">
-                            Title is mandatory
-                        </p>
-                    ) : null}                        
-                </div>
-                {/* TYPE */}
-                <div className="flex flex-col gap-1 mx-4 items-start justify-center">
-                    <label className="label">
-                        Type:
-                    </label>
-                    <select
-                        placeholder="Type"
-                        {...register('type', {
-                            required: true,
-                        })}
-                        className="input"
-                    >
-                    <option value="NOTE">Note</option>
-                    <option value="JOURNAL">Journal</option>
-                    <option value="CONFESSION">Confession</option>
-                    <option value="LETTER">Letter</option>
-                    <option value="PERSONAL">Personal</option>
-                    <option value="BUSINESS">Business</option>
-                    </select>
-                    {errors.type?.type === 'required' ? (
-                        <p className="text-red-500 text-xs italic">
-                            Type is mandatory
-                        </p>
-                    ) : null}                        
-                </div>
-                {/* CONTENT */}
-                <div className='flex flex-col gap-1 col-span-2 mx-2 items-start justify-center'>
-                <label className="label">
-                        Write your content here below:
-                    </label>
-                    <textarea 
-                        {...register('content', {
-                            required: true,
-                        })}
-                        className='input '
-                        rows={10}
-                        cols={60}>
-                            
-                    </textarea>
-                    {errors.content?.type === 'required' ? (
-                        <p className="text-red-500 text-xs italic">
-                            Content is mandatory
-                        </p>
-                    ) : null}  
-                </div>
-                <button
-                    type="submit"
-                    className="text-center bg-blue-400 py-3 my-2 rounded-md shadow-xl text-pwgreen-50 font-bold uppercase font-Rubik hover:bg-pwgreen-800 transition-all">
-                    Save Directory
-                </button>
-            </form>
+                            Write your content here below:
+                        </label>
+                        <textarea 
+                            {...register('content', {
+                                required: true,
+                            })}
+                            className='ring-2 ring-purple-300 ring-inset rounded-lg '
+                            rows={10}
+                            cols={50}>
+                                
+                        </textarea>
+                        {errors.content?.type === 'required' ? (
+                            <p className="text-red-500 text-xs italic">
+                                Content is mandatory
+                            </p>
+                        ) : null}  
+                    </div>
+                    <button
+                        type="submit"
+                        className="text-center bg-blue-400 py-3 my-2 rounded-md shadow-xl text-pwgreen-50 font-bold uppercase font-Rubik hover:bg-pwgreen-800 transition-all">
+                        Save Directory
+                    </button>
+                </form>
+            </div>
         </div>
     )
 }
