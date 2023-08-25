@@ -2,10 +2,10 @@
 import { Directory } from '@/utils/interfaces';
 import { createDirectory, getUser } from '../utils/dbQueries';
 import { NextComponentType } from 'next'
-import { useQuery } from 'react-query';
+// import { useQuery } from 'react-query';
 import {useSession} from 'next-auth/react'
 import { SubmitHandler, useForm } from "react-hook-form";
-import { useEffect } from 'react';
+// import { useEffect } from 'react';
 import { alerts, redirectionAlert } from '@/utils/alerts';
 
 
@@ -100,7 +100,7 @@ const NewDirectory : NextComponentType = () => {
                 <form className="grid grid-cols-2 w-full gap-4 justify-center items-center lg:gap-3"
                         onSubmit={handleSubmit(onSubmit)}>
                     {/* TITLE */}
-                    <div className="flex flex-col gap-1 mx-4 items-start justify-center  bg-red-100">
+                    <div className="grid grid-span-1 gap-1 mx-4 items-start justify-center">
                         <label className="label">
                             Title:
                         </label>
@@ -117,7 +117,7 @@ const NewDirectory : NextComponentType = () => {
                         ) : null}                        
                     </div>
                     {/* TYPE */}
-                    <div className="flex flex-col gap-1 mx-4 items-start justify-center  bg-red-100">
+                    <div className="grid grid-span-1 gap-1 mx-4 items-start justify-center">
                         <label className="label">
                             Type:
                         </label>
@@ -126,7 +126,7 @@ const NewDirectory : NextComponentType = () => {
                             {...register('type', {
                                 required: true,
                             })}
-                            className="ring-2 ring-purple-300 ring-inset rounded-lg w-[30vh]"
+                            className="ring-2 ring-purple-300 ring-inset rounded-lg "
                             defaultValue="Note"
                         >
                         <option value="NOTE">Note</option>
@@ -143,7 +143,7 @@ const NewDirectory : NextComponentType = () => {
                         ) : null}                        
                     </div>
                     {/* CONTENT */}
-                    <div className='flex flex-col gap-1 col-span-2 mx-2 items-start justify-center  bg-red-100'>
+                    <div className='grid grid-span-2 gap-1 col-span-2 mx-2 items-start justify-center'>
                     <label className="label">
                             Write your content here below:
                         </label>
@@ -164,7 +164,7 @@ const NewDirectory : NextComponentType = () => {
                     </div>
                     <button
                         type="submit"
-                        className="text-center bg-blue-400 py-3 my-2 rounded-md shadow-xl text-pwgreen-50 font-bold uppercase font-Rubik hover:bg-pwgreen-800 transition-all">
+                        className="ml-16 justify-center text-center bg-purple-400 py-3 my-2 rounded-md shadow-xl  font-bold uppercase font-YsabeauInfant hover:bg-purple-800 hover:text-white transition-all">
                         Save Directory
                     </button>
                 </form>

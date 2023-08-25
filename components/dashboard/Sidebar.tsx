@@ -25,7 +25,7 @@ export const Sidebar = (props : SidebarProps) => {
                     </div>
                 </Link>
                 <span className='border-b-[1px] border-gray-200 w-full p-2'></span>
-                <Link href='/dashboard/files'>
+                <Link href='/dashboard/directories'>
                     <div className='bg-gray-100 hover:bg-gray-200 cursor-pinter p-3 rounded-lg inline-block'>
                         <VscFiles size={20}/>
                     </div>

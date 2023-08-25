@@ -8,7 +8,7 @@ interface HeaderProps  {
 const Header = ({page} : HeaderProps) => {
     const { data: session, status } = useSession()
     return (
-        <div className="flex font-Rubik text-xl justify-between px-4 pt-4">
+        <div className="flex font-YsabeauOffice text-3xl justify-between px-4 pt-4">
             <h2>{page}</h2>
             {status !=='authenticated' ? (
                 
