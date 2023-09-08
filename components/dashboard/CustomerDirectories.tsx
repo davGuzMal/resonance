@@ -12,6 +12,7 @@ import { IoBusinessSharp } from 'react-icons/io5'
 
 export const CustomerDirectories = () => {
     let orderSense=0
+    // let aux : Directory[] | undefined = []
     const [showedDirectories, setShowedDirectories] = useState<Directory[]>()
     const { data: session, status } = useSession()
     const {
@@ -22,11 +23,12 @@ export const CustomerDirectories = () => {
         refetch
     } = useQuery(['directories'], ()=>getDirectories(session?.user?.id!, session?.user?.email!))
 
-    // console.log(showedDirectories)
+    
     const sortBy = (index: string) => {
       console.log(showedDirectories)
-      orderSense === 0 ? orderSense = 1 : orderSense = 0      
-      setShowedDirectories( showedDirectories?.sort((a, b) =>{
+      console.log(orderSense)
+      setShowedDirectories(showedDirectories?.sort((a, b) =>{     
+        
         switch (index) {
           case 'type':
             if(orderSense === 0){
@@ -48,31 +50,39 @@ export const CustomerDirectories = () => {
               }
               return 0
             }
-            console.log(showedDirectories)
+            
             break;
-        
+            
           default:
+            
             break;
-        }
+        }        
         return 0
-      }))
+      }))      
+      orderSense === 0 ? orderSense = 1 : orderSense = 0 
     }
     useEffect(() => {    
         refetch
         
     }, [status])
+    useEffect(() => {
+      console.log(showedDirectories)
+      console.log('si')
+    }, [showedDirectories, orderSense])
     useEffect(() => {        
         setShowedDirectories(directories)
-        
+        // aux = directories
+        // console.log(aux)
     }, [isSuccess])
+    
   return (
     <div className='bg-gray-100 min-h-screen p-4'>
       <div className='font-YsabeauInfant text-xl w-full m-auto p-4 border rounded-lg bg-white overflow-y-auto'>
         <div className='my-3 p-2 grid md:grid-cols-4 sm:grid-cols-3 grid-cols-2 items-center justify-between'>
           <span><button>Title</button></span>
           <span className='sm:text-left text-right'><button>Content</button></span>
-          <span className='hidden md:grid'><button>Last update</button></span>
-          <span className='sm:flex hidden md:grid'><button onClick={()=>sortBy('type')}>Type</button></span>
+          <span className='hidden md:grid'><button className='text-left'>Last update</button></span>
+          <span className='sm:flex hidden md:grid'><button className='text-left' onClick={()=>sortBy('type')}>Type</button></span>
         </div>
         <ul>
                 {showedDirectories?.map((dir, id)=>(
