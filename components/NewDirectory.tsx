@@ -55,38 +55,36 @@ const NewDirectory : NextComponentType = () => {
     return (
         <div className="p-8 flex flex justify-between items-center -inset -skew-y-3 bg-gradient-to-r from-purple-300 via-gray-100 rounded-lg">
             <div className='skew-y-3 font-EduSA bg-gradient-to-r from-blue-100 via-gray-100 w-1/2 h-[65vh] p-4 m-4 rounded lg'>
-                <p className='text-3xl mt-8'>Journaling helps control your symptoms and improve your mood by:
-                    <ul className='list-disc mt-8'>
-                        <li className='text-xl'>Helping you <span>   </span>
-                        <span className="relative">
-                            <span className="block absolute -inset-0.5 -skew-y-3 bg-purple-500" aria-hidden="true"></span>
-                            <span className="relative text-white">prioritize</span>
-                        </span>
-                        <span>   </span>
-                        problems, fears, and concerns.</li>
-                        <li className='text-xl'>Tracking any symptoms day-to-day so that you can <span>   </span>
-                        <span className="relative">
-                            <span className="block absolute -inset-1 -skew-y-3 bg-purple-500" aria-hidden="true"></span>
-                            <span className="relative text-white">recognize</span>
-                        </span>
-                        <span>   </span>
-                        triggers and <span>   </span>
-                        <span className="relative">
-                            <span className="block absolute -inset-1 -skew-y-3 bg-purple-500" aria-hidden="true"></span>
-                            <span className="relative text-white">learn</span>
-                        </span>
-                        <span>   </span>
-                        ways to better control them</li>
-                        <li className='text-xl'>Providing an opportunity for <span>   </span>
-                        <span className="relative">
-                            <span className="block absolute -inset-1 -skew-y-3 bg-purple-500" aria-hidden="true"></span>
-                            <span className="relative text-white">positive self-talk</span>
-                        </span>
-                        <span>   </span>
-                        and identifying negative thoughts and behaviors.</li>
-                    </ul>                
-                </p>
-                
+                <p className='text-3xl mt-8'>Journaling helps control your symptoms and improve your mood by:</p>
+                <ul className='list-disc mt-8'>
+                    <li className='text-xl'>Helping you <span>   </span>
+                    <span className="relative">
+                        <span className="block absolute -inset-0.5 -skew-y-3 bg-purple-500" aria-hidden="true"></span>
+                        <span className="relative text-white">prioritize</span>
+                    </span>
+                    <span>   </span>
+                    problems, fears, and concerns.</li>
+                    <li className='text-xl'>Tracking any symptoms day-to-day so that you can <span>   </span>
+                    <span className="relative">
+                        <span className="block absolute -inset-1 -skew-y-3 bg-purple-500" aria-hidden="true"></span>
+                        <span className="relative text-white">recognize</span>
+                    </span>
+                    <span>   </span>
+                    triggers and <span>   </span>
+                    <span className="relative">
+                        <span className="block absolute -inset-1 -skew-y-3 bg-purple-500" aria-hidden="true"></span>
+                        <span className="relative text-white">learn</span>
+                    </span>
+                    <span>   </span>
+                    ways to better control them</li>
+                    <li className='text-xl'>Providing an opportunity for <span>   </span>
+                    <span className="relative">
+                        <span className="block absolute -inset-1 -skew-y-3 bg-purple-500" aria-hidden="true"></span>
+                        <span className="relative text-white">positive self-talk</span>
+                    </span>
+                    <span>   </span>
+                    and identifying negative thoughts and behaviors.</li>
+                </ul>  
             </div>
             <div className='skew-y-3 p-4 text-lg rounded-lg m-8 font-YsabeauInfant'>
 

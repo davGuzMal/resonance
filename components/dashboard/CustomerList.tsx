@@ -33,10 +33,10 @@ export const CustomerList = () => {
     }, [isLoading])
   return (
     <div className='bg-gray-100 min-h-screen p-4'>
-        <div className='w-full m-auto p-4 border rounded-lg bg-white overflow-y-auto'>
+        <div className='font-YsabeauInfant text-xl w-full m-auto p-4 border rounded-lg bg-white overflow-y-auto'>
             <div className='my-3 p-2 grid md:grid-cols-4 sm:grid-cols-3 grid-cols-2 items-center justify-between'>
-                <span>Name</span>
-                <span className='sm:text-left text-right'>Email</span>
+                <span className='ml-16'>Name</span>
+                <span className='sm:text-left text-right ml-8'>Email</span>
                 <span className='hidden md:grid'>Last Directory</span>
                 <span className='hidden md:grid'>Account verified</span>
             </div>

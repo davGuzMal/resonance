@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, MouseEvent } from 'react'
 import {useSession} from 'next-auth/react'
 import { Directory } from '@/utils/interfaces'
 import { useQuery } from 'react-query'
@@ -9,11 +9,19 @@ import { FaUserSecret } from 'react-icons/fa'
 import { SlEnvolopeLetter } from 'react-icons/sl'
 import { AiFillLock } from 'react-icons/ai'
 import { IoBusinessSharp } from 'react-icons/io5'
+import { Filters } from './Filters'
 
-export const CustomerDirectories = () => {
-    let orderSense=0
-    // let aux : Directory[] | undefined = []
+export const CustomerDirectories = () => {    
+    
+    const [allDirectories, setAllDirectories] = useState<Directory[] | [] >()
     const [showedDirectories, setShowedDirectories] = useState<Directory[]>()
+    const [sense, setSense] = useState('asc')
+    const [filters, setFilters] = useState({
+      s : '',
+      f : '',
+      r : false,
+      sort : ''      
+    })
     const { data: session, status } = useSession()
     const {
         data: directories,
@@ -24,65 +32,103 @@ export const CustomerDirectories = () => {
     } = useQuery(['directories'], ()=>getDirectories(session?.user?.id!, session?.user?.email!))
 
     
-    const sortBy = (index: string) => {
-      console.log(showedDirectories)
-      console.log(orderSense)
-      setShowedDirectories(showedDirectories?.sort((a, b) =>{     
+    const sortBy = (e : MouseEvent<HTMLButtonElement>) => {
+      if(sense === 'asc') {
+        setSense('desc')
+      } 
+      else {
+        setSense('asc')
+      }       
+      setFilters({
+        ... filters,
+        sort: e.target.value
+      })      
+    }
+    //Use effect for update directories when there is a change
+    useEffect(() => {    
+        refetch
         
-        switch (index) {
-          case 'type':
-            if(orderSense === 0){
+    }, [status])
+    //Use effect to visualize directories after filter or sort
+    useEffect(() => {
+      let aux : Directory[] | Array<any> | undefined
+      
+      if(filters.r === true){
+        setShowedDirectories(directories)
+        setFilters({
+          s : '',
+          f : '',
+          r : false,
+          sort : ''      
+        })
+      }
+      else{
 
-              if(a.type > b.type){
+        if(filters.s !== ''){//filter by search title or content
+          aux = allDirectories?.filter(d => 
+            d.title.toLocaleLowerCase().indexOf(filters.s.toLocaleLowerCase()) >= 0 ||
+            d.content.toLocaleLowerCase().indexOf(filters.s.toLocaleLowerCase()) >= 0 ||
+            d.type === filters.f
+          )        
+        }
+        if(filters.f !== ''){//filter by type
+          if(aux===undefined) aux = [... allDirectories]
+          aux= aux?.filter(d => d.type === filters.f)
+          
+        }
+        if(filters.sort !== '' ){//sort
+          if(aux===undefined) aux = [... allDirectories]
+                 
+          aux?.sort((a, b) => {
+            if(sense === 'asc'){
+  
+              if(a[filters.sort] > b[filters.sort]){
                 return -1
               }
-              if(b.type > a.type){
+              if(b[filters.sort] > a[filters.sort]){
                 return 1
               }
               
             }
             else{
-              if(a.type > b.type){
+              if(a[filters.sort] > b[filters.sort]){
                 return 1
               }
-              if(b.type > a.type){
+              if(b[filters.sort] > a[filters.sort]){
                 return -1
-              }
-              return 0
+              }            
             }
-            
-            break;
-            
-          default:
-            
-            break;
-        }        
-        return 0
-      }))      
-      orderSense === 0 ? orderSense = 1 : orderSense = 0 
-    }
-    useEffect(() => {    
-        refetch
-        
-    }, [status])
-    useEffect(() => {
+            return 0
+          }
+          )    
+          
+        }
+      }
+      if(aux !== undefined) setShowedDirectories(aux)
+      else setShowedDirectories(directories)
+
       console.log(showedDirectories)
-      console.log('si')
-    }, [showedDirectories, orderSense])
+      console.log(filters)
+    }, [filters])
+
+    //use Effect for save directories in local states once the query has had success
     useEffect(() => {        
         setShowedDirectories(directories)
-        // aux = directories
-        // console.log(aux)
+        setAllDirectories(directories)        
     }, [isSuccess])
     
   return (
     <div className='bg-gray-100 min-h-screen p-4'>
       <div className='font-YsabeauInfant text-xl w-full m-auto p-4 border rounded-lg bg-white overflow-y-auto'>
+      <Filters
+        filters = {filters}
+        setFilters = {setFilters}
+      /> 
         <div className='my-3 p-2 grid md:grid-cols-4 sm:grid-cols-3 grid-cols-2 items-center justify-between'>
-          <span><button>Title</button></span>
-          <span className='sm:text-left text-right'><button>Content</button></span>
-          <span className='hidden md:grid'><button className='text-left'>Last update</button></span>
-          <span className='sm:flex hidden md:grid'><button className='text-left' onClick={()=>sortBy('type')}>Type</button></span>
+          <span><button className='ml-16' value='title' onClick={(e)=>sortBy(e)}>Title</button></span>
+          <span className='sm:text-left text-right'><button className='ml-8'>Content</button></span>
+          <span className='hidden md:grid'><button value = 'updateDate' onClick={(e)=>sortBy(e)} className='text-left'>Last update</button></span>
+          <span className='sm:flex hidden md:grid'><button value = 'type'className='text-left' onClick={(e)=>sortBy(e)}>Type</button></span>
         </div>
         <ul>
                 {showedDirectories?.map((dir, id)=>(
