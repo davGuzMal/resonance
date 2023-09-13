@@ -1,8 +1,8 @@
 'use client'
-import {NextPage } from 'next'
+// import {NextPage } from 'next'
 import Link from 'next/link';
 import {signIn, signOut, useSession} from 'next-auth/react'
-import { IoAddCircle, IoAddCircleOutline } from 'react-icons/io5'
+import { IoAddCircleOutline } from 'react-icons/io5'
 import { Avatar,  User, Dropdown, Text } from "@nextui-org/react";
 
 type NavbarProps = {
@@ -100,7 +100,7 @@ const Navbar  = (props : NavbarProps) => {
                                                     {session.user?.email ? session.user.email : null}
                                                 </Text>
                                             </Dropdown.Item>
-                                            <Dropdown.Item key="profile"><Link className='text-black' href='/dashboard/profile'>Profile</Link></Dropdown.Item>
+                                            <Dropdown.Item key="profile"><Link className='text-black' href='/dashboard/settings'>Profile</Link></Dropdown.Item>
                                             <Dropdown.Item key="dashboard"><Link className='text-black' href='/dashboard'>Dashboard</Link></Dropdown.Item>
                                             <Dropdown.Item key="directories"><Link className='text-black' href='/dashboard/directories'>Directories</Link></Dropdown.Item>
                                             <Dropdown.Item key="logout" withDivider color="error"><button onClick={()=>signOut()}>Logout</button></Dropdown.Item>

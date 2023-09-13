@@ -5,7 +5,6 @@ import { NextComponentType } from 'next'
 // import { useQuery } from 'react-query';
 import {useSession} from 'next-auth/react'
 import { SubmitHandler, useForm } from "react-hook-form";
-// import { useEffect } from 'react';
 import { alerts, redirectionAlert } from '@/utils/alerts';
 
 

@@ -19,8 +19,7 @@ export const Carousel = () => {
                 <p className='text-6xl mt-32'>"The all is mind; the  
                 <span className='text-purple-800'> Universe</span> is mental"</p>
                 <h1 className='text-xl mt-8 text-right mr-8'>First Hermetic Principle</h1>
-            </div>
-            
+            </div>           
 
             <Lightbox             
                 styles={{ container: { backgroundColor: "transparent" } }}         

@@ -1,5 +1,6 @@
 import React, { useEffect, useState, MouseEvent } from 'react'
 import {useSession} from 'next-auth/react'
+import {Tooltip, Button} from "@nextui-org/react";
 import { Directory } from '@/utils/interfaces'
 import { useQuery } from 'react-query'
 import { getDirectories } from '@/utils/dbQueries'
@@ -8,13 +9,17 @@ import { BsJournalBookmark } from 'react-icons/bs'
 import { FaUserSecret } from 'react-icons/fa'
 import { SlEnvolopeLetter } from 'react-icons/sl'
 import { AiFillLock } from 'react-icons/ai'
-import { IoBusinessSharp } from 'react-icons/io5'
+import { IoBusinessSharp, IoAddCircleOutline } from 'react-icons/io5'
 import { Filters } from './Filters'
+import { ShowDirectoryModal } from './ShowDirectoryModal'
+import { CreateDirectoryModal } from './CreateDirectoryModal';
 
 export const CustomerDirectories = () => {    
     
+  //Directories
     const [allDirectories, setAllDirectories] = useState<Directory[] | [] >()
     const [showedDirectories, setShowedDirectories] = useState<Directory[]>()
+    //Filters
     const [sense, setSense] = useState('asc')
     const [filters, setFilters] = useState({
       s : '',
@@ -22,7 +27,9 @@ export const CustomerDirectories = () => {
       r : false,
       sort : ''      
     })
+    //user session
     const { data: session, status } = useSession()
+    //Query to get directories from db
     const {
         data: directories,
         error: error,
@@ -30,8 +37,43 @@ export const CustomerDirectories = () => {
         isSuccess : isSuccess,
         refetch
     } = useQuery(['directories'], ()=>getDirectories(session?.user?.id!, session?.user?.email!))
+    //open modal to see directory content
+    const [isOpen, setIsOpen] = useState(false)
+    const [isOpenAdd, setIsOpenAdd] = useState(false)
+    const [modalDirectory, setModalDirectory] = useState<Directory>({
+      id: '',
+      userId: '',
+      title: '',
+      type: '',
+      content: '',
+      updateDate: new Date()
 
-    
+    })
+    //Open and Close modal to create directories
+    function openModalAdd (){
+      setIsOpenAdd(true)      
+    }
+    function closeModalAdd() {
+      setIsOpenAdd(false)
+    } 
+    //Open and Close modal to show directories
+    function closeModal() {
+      setIsOpen(false)
+    }  
+    function openModal(directory : Directory = modalDirectory) {   
+        setModalDirectory({
+          ...modalDirectory,
+          id: directory.id,
+          userId: directory.userId,
+          title: directory.title,
+          type: directory.type,
+          content: directory.content,
+          updateDate: directory.updateDate
+        })
+        setIsOpen(true)
+    }
+
+    //Determine sort parameters
     const sortBy = (e : MouseEvent<HTMLButtonElement>) => {
       if(sense === 'asc') {
         setSense('desc')
@@ -105,10 +147,7 @@ export const CustomerDirectories = () => {
         }
       }
       if(aux !== undefined) setShowedDirectories(aux)
-      else setShowedDirectories(directories)
-
-      console.log(showedDirectories)
-      console.log(filters)
+      else setShowedDirectories(directories)     
     }, [filters])
 
     //use Effect for save directories in local states once the query has had success
@@ -118,18 +157,34 @@ export const CustomerDirectories = () => {
     }, [isSuccess])
     
   return (
-    <div className='bg-gray-100 min-h-screen p-4'>
+    <div className='bg-gray-100 min-h-screen p-4'>      
       <div className='font-YsabeauInfant text-xl w-full m-auto p-4 border rounded-lg bg-white overflow-y-auto'>
       <Filters
         filters = {filters}
         setFilters = {setFilters}
       /> 
         <div className='my-3 p-2 grid md:grid-cols-4 sm:grid-cols-3 grid-cols-2 items-center justify-between'>
-          <span><button className='ml-16' value='title' onClick={(e)=>sortBy(e)}>Title</button></span>
+          <span className='flex'>
+            <Tooltip color='secondary' placement='top' offset={-2} content={
+              <div className='font-YsabeauOffice'>Add new directory</div>
+            }>              
+              <IoAddCircleOutline className='text-purple-800 text-3xl' name='add' onClick={openModalAdd}/>             
+            </Tooltip>
+            <button className='ml-16' value='title' onClick={(e)=>sortBy(e)}>Title</button>
+          </span>
           <span className='sm:text-left text-right'><button className='ml-8'>Content</button></span>
           <span className='hidden md:grid'><button value = 'updateDate' onClick={(e)=>sortBy(e)} className='text-left'>Last update</button></span>
           <span className='sm:flex hidden md:grid'><button value = 'type'className='text-left' onClick={(e)=>sortBy(e)}>Type</button></span>
         </div>
+        <ShowDirectoryModal
+          isOpen = {isOpen}
+          closeModal = {closeModal}
+          modalDirectory = {modalDirectory}
+        />
+        <CreateDirectoryModal
+          isOpen = {isOpenAdd}
+          closeModal = {closeModalAdd}
+        />
         <ul>
                 {showedDirectories?.map((dir, id)=>(
                     <li key={id} className='bg-gray-50 hover:bg-gray-100 rounded-lg my-3 p-2 grid md:grid-cols-4 sm:grid-cols-3 grid-cols-2 items-center justify-between cursos-pointer'>
@@ -145,7 +200,7 @@ export const CustomerDirectories = () => {
                             </div>
                             <p className='pl-4'>{dir.title}</p>
                         </div>
-                        <p className='text-gray-600 sm:text-left text-right'>{dir.content.slice(0,20)} ...</p>
+                        <p className='text-gray-600 sm:text-left text-right'><button name='show'onClick={()=>openModal(dir)}>{dir.content.slice(0,20)} ...</button></p>
                         <p className='hidden md:flex'>{dir.updateDate.toString().slice(0, dir.updateDate.toString().indexOf('T'))}</p>
                         <p className='sm:flex hidden justify-between items-center'>{dir.type}</p>
                     </li>
