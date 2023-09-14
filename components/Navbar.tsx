@@ -92,7 +92,7 @@ const Navbar  = (props : NavbarProps) => {
                                         )}                             
                                         
                                         <Dropdown.Menu aria-label="User Actions"  color='secondary'>
-                                            <Dropdown.Item key="profile" css={{ height: "$18" }}>
+                                            <Dropdown.Item key="identity" css={{ height: "$18" }}>
                                                 <Text b color="inherit" css={{ d: "flex" }}>
                                                     Signed in as
                                                 </Text>

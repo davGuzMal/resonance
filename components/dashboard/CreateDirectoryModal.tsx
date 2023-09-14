@@ -162,33 +162,19 @@ export const CreateDirectoryModal = ({isOpen, closeModal} : props) => {
                                 </p>
                             ) : null}  
                         </div>                        
-                                                  
-                            <button
-                                type="submit"
-                                className="justify-center text-center bg-purple-400 py-3 my-2 rounded-md shadow-xl font-bold uppercase font-YsabeauInfant hover:bg-purple-800 hover:text-white transition-all">
-                                Save Directory
-                            </button>
-                        
+                        <button
+                            type="submit"
+                            className="text-center bg-purple-400 mx-[15vh] w-[200px] py-3 my-2 rounded-md shadow-xl font-bold uppercase font-YsabeauInfant hover:bg-purple-800 hover:text-white transition-all">
+                            Save Directory
+                        </button>
                     </form>
-                  </Dialog.Description>
-                  
-
-                  {/* <div className="mt-4">
-                  <button
-                      type="button"
-                      className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                      onClick={closeModal}
-                    >
-                      Got it, thanks!
-                    </button>
-                  </div> */}
+                  </Dialog.Description>                  
                 </Dialog.Panel>
               </Transition.Child>
             </div>
           </div>
         </Dialog>
       </Transition>
-
     </>
   )
 }
