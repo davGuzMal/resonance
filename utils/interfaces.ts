@@ -14,7 +14,7 @@ export interface NewUser {
 }
 
 export interface User {
-    id : string,
+    id : string ,
     name: string,
     email: string,
     emailVerified: boolean

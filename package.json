@@ -21,6 +21,7 @@
     "axios": "^1.4.0",
     "bcrypt": "^5.1.0",
     "chart.js": "^4.3.0",
+    "cookies": "^0.8.0",
     "dot-env": "^0.0.1",
     "next": "13.4.5",
     "nodemailer": "^6.9.5",
@@ -37,6 +38,7 @@
     "yet-another-react-lightbox": "^3.11.4"
   },
   "devDependencies": {
+    "@types/cookies": "^0.7.8",
     "prisma": "^5.0.0"
   }
 }

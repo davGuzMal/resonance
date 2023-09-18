@@ -65,12 +65,12 @@ export async function POST(request: Request) {
                 const account = await prisma.account.create({
                     data: {
                       userId: newUser.id,
-                      type: "Credentials",
-                      provider: "Credentials",
+                      type: "credentials",
+                      provider: "credentials",
                       providerAccountId: newUser.id,
                     },
                   })
-                return NextResponse.json({ newUser })
+                
                 if(newUser && account){
                     return NextResponse.json({ newUser })
                 }

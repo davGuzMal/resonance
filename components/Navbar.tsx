@@ -1,7 +1,7 @@
 'use client'
 // import {NextPage } from 'next'
 import Link from 'next/link';
-import {signIn, signOut, useSession} from 'next-auth/react'
+import {signIn, signOut, useSession, getSession} from 'next-auth/react'
 import { IoAddCircleOutline } from 'react-icons/io5'
 import { Avatar,  User, Dropdown, Text } from "@nextui-org/react";
 
@@ -9,11 +9,12 @@ type NavbarProps = {
     children: React.ReactNode;
 }
 
-const Navbar  = (props : NavbarProps) => {
+const Navbar  = async(props : NavbarProps) => {
 
     // const session = await getServerSession(options) 
     const { data: session, status } = useSession()    
-        
+    console.log(session)
+   
     return (
         <>
         
