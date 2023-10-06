@@ -1,4 +1,5 @@
 "use client";
+import { useEffect, useState } from 'react';
 import { Directory } from '@/utils/interfaces';
 import { createDirectory, getUser } from '../utils/dbQueries';
 import { NextComponentType } from 'next'
@@ -17,8 +18,8 @@ const NewDirectory : NextComponentType = () => {
             content : ''
         }
     });
-    const { data: session, status } = useSession()    
-    
+    const { data: session, status, update } = useSession()    
+    const [aux, setAux] = useState(status)
     
     const onSubmit : SubmitHandler<Directory> = async(data) => {
         
@@ -48,12 +49,16 @@ const NewDirectory : NextComponentType = () => {
         }
         
     }
-    // useEffect(() => {
-    //     refetch()
-    // }, [isLoading])
+    useEffect(() => {    
+        update
+        console.log(status)
+        setAux(() => status)        
+        console.log(status)
+        console.log(aux)
+    }, [status])    
     return (
         <div className="p-8 flex flex justify-between items-center -inset -skew-y-3 bg-gradient-to-r from-purple-300 via-gray-100 rounded-lg">
-            <div className='skew-y-3 font-EduSA bg-gradient-to-r from-blue-100 via-gray-100 w-1/2 h-[65vh] p-4 m-4 rounded lg'>
+            <div className='skew-y-3 font-EduSA bg-gradient-to-r from-blue-100 via-gray-100 w-1/2 h-[65vh] p-4 m-4 rounded lg'>                
                 <p className='text-3xl mt-8'>Journaling helps control your symptoms and improve your mood by:</p>
                 <ul className='list-disc mt-8'>
                     <li className='text-xl'>Helping you <span>   </span>
@@ -94,77 +99,82 @@ const NewDirectory : NextComponentType = () => {
                         monitored bank-file
                     </p>
                 </div>
-                <form className="grid grid-cols-2 w-full gap-4 justify-center items-center lg:gap-3"
-                        onSubmit={handleSubmit(onSubmit)}>
-                    {/* TITLE */}
-                    <div className="grid grid-span-1 gap-1 mx-4 items-start justify-center">
+                {status !=='authenticated' ?
+                    <p className='text-3xl mt-8'>Loading...</p>
+                    :
+                    
+                    <form className="grid grid-cols-2 w-full gap-4 justify-center items-center lg:gap-3"
+                            onSubmit={handleSubmit(onSubmit)}>
+                        {/* TITLE */}
+                        <div className="grid grid-span-1 gap-1 mx-4 items-start justify-center">
+                            <label className="label">
+                                Title:
+                            </label>
+                            <input                            
+                                {...register('title', {
+                                    required: true,
+                                })}
+                                className="ring-2 ring-purple-300 ring-inset rounded-lg "
+                            />
+                            {errors.title?.type === 'required' ? (
+                                <p className="text-red-500 text-xs italic">
+                                    Title is mandatory
+                                </p>
+                            ) : null}                        
+                        </div>
+                        {/* TYPE */}
+                        <div className="grid grid-span-1 gap-1 mx-4 items-start justify-center">
+                            <label className="label">
+                                Type:
+                            </label>
+                            <select
+                                placeholder="Type"
+                                {...register('type', {
+                                    required: true,
+                                })}
+                                className="ring-2 ring-purple-300 ring-inset rounded-lg "
+                                defaultValue="Note"
+                            >
+                            <option value="NOTE">Note</option>
+                            <option value="JOURNAL">Journal</option>
+                            <option value="CONFESSION">Confession</option>
+                            <option value="LETTER">Letter</option>
+                            <option value="PERSONAL">Personal</option>
+                            <option value="BUSINESS">Business</option>
+                            </select>
+                            {errors.type?.type === 'required' ? (
+                                <p className="text-red-500 text-xs italic">
+                                    Type is mandatory
+                                </p>
+                            ) : null}                        
+                        </div>
+                        {/* CONTENT */}
+                        <div className='grid grid-span-2 gap-1 col-span-2 mx-2 items-start justify-center'>
                         <label className="label">
-                            Title:
-                        </label>
-                        <input                            
-                            {...register('title', {
-                                required: true,
-                            })}
-                            className="ring-2 ring-purple-300 ring-inset rounded-lg "
-                        />
-                        {errors.title?.type === 'required' ? (
-                            <p className="text-red-500 text-xs italic">
-                                Title is mandatory
-                            </p>
-                        ) : null}                        
-                    </div>
-                    {/* TYPE */}
-                    <div className="grid grid-span-1 gap-1 mx-4 items-start justify-center">
-                        <label className="label">
-                            Type:
-                        </label>
-                        <select
-                            placeholder="Type"
-                            {...register('type', {
-                                required: true,
-                            })}
-                            className="ring-2 ring-purple-300 ring-inset rounded-lg "
-                            defaultValue="Note"
-                        >
-                        <option value="NOTE">Note</option>
-                        <option value="JOURNAL">Journal</option>
-                        <option value="CONFESSION">Confession</option>
-                        <option value="LETTER">Letter</option>
-                        <option value="PERSONAL">Personal</option>
-                        <option value="BUSINESS">Business</option>
-                        </select>
-                        {errors.type?.type === 'required' ? (
-                            <p className="text-red-500 text-xs italic">
-                                Type is mandatory
-                            </p>
-                        ) : null}                        
-                    </div>
-                    {/* CONTENT */}
-                    <div className='grid grid-span-2 gap-1 col-span-2 mx-2 items-start justify-center'>
-                    <label className="label">
-                            Write your content here below:
-                        </label>
-                        <textarea 
-                            {...register('content', {
-                                required: true,
-                            })}
-                            className='ring-2 ring-purple-300 ring-inset rounded-lg '
-                            rows={10}
-                            cols={50}>
-                                
-                        </textarea>
-                        {errors.content?.type === 'required' ? (
-                            <p className="text-red-500 text-xs italic">
-                                Content is mandatory
-                            </p>
-                        ) : null}  
-                    </div>
-                    <button
-                        type="submit"
-                        className="ml-16 justify-center text-center bg-purple-400 py-3 my-2 rounded-md shadow-xl  font-bold uppercase font-YsabeauInfant hover:bg-purple-800 hover:text-white transition-all">
-                        Save Directory
-                    </button>
-                </form>
+                                Write your content here below:
+                            </label>
+                            <textarea 
+                                {...register('content', {
+                                    required: true,
+                                })}
+                                className='ring-2 ring-purple-300 ring-inset rounded-lg '
+                                rows={10}
+                                cols={50}>
+                                    
+                            </textarea>
+                            {errors.content?.type === 'required' ? (
+                                <p className="text-red-500 text-xs italic">
+                                    Content is mandatory
+                                </p>
+                            ) : null}  
+                        </div>
+                        <button
+                            type="submit"
+                            className="ml-16 justify-center text-center bg-purple-400 py-3 my-2 rounded-md shadow-xl  font-bold uppercase font-YsabeauInfant hover:bg-purple-800 hover:text-white transition-all">
+                            Save Directory
+                        </button>
+                    </form>
+                }
             </div>
         </div>
     )

@@ -14,7 +14,7 @@ const Header = ({page} : HeaderProps) => {
                 
                 <h2>Welcome back</h2>
             ) : (
-                <h2>Welcome back, {session.user?.name?.slice(0, session.user?.name.indexOf(' '))}</h2>
+                <h2>Welcome back, {session.user?.name?.slice(0, session.user?.name.indexOf(' ') > 0 ? session.user?.name.indexOf(' ') : session.user?.name.length)}</h2>
             )}
             
         </div>

@@ -14,9 +14,10 @@ const CustomerSettings = () => {
         id : '',
         name : '',
         email : '',
-        emailVerified: false
+        emailVerified: new Date()
     }
 }); 
+  console.log(session?.user)
   const onSubmit : SubmitHandler<User> = async(data) => {
     data = {
       ...data,
@@ -31,7 +32,7 @@ const CustomerSettings = () => {
         redirectionAlert({
                 icon: 'info',
             title: '<strong>User update</strong>',
-            html: 'Your information have been successfully updated '+updatedUser.name,
+            html: 'Your information have been successfully updated '+data.name,
             confirmButtonText: 'Got it!',
             confirmButtonAriaLabel: 'Thumbs up, great!',
             link: '/dashboard'
@@ -56,7 +57,7 @@ const CustomerSettings = () => {
         <div>
           <h1 className="font-YsabeauOffice italic text-3xl"> Please LogIn your account to modify settings</h1>
         </div>
-      ) : session.user?.name ? (
+      ) : session.user?.email ? (
 
         <div className="flex justify-end">
 

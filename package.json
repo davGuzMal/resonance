@@ -11,6 +11,7 @@
   "dependencies": {
     "@auth0/nextjs-auth0": "^2.6.2",
     "@headlessui/react": "^1.7.17",
+    "@mailchimp/mailchimp_marketing": "^3.0.80",
     "@next-auth/prisma-adapter": "^1.0.7",
     "@nextui-org/react": "^1.0.0-beta.13",
     "@prisma/client": "^5.0.0",
