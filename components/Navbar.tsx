@@ -35,7 +35,7 @@ const Navbar  = (props : NavbarProps) => {
                                             
                             <Link className='text-black hover:text-purple-700' href="/">Home</Link>                    
                         
-                            <Link className='text-black hover:text-purple-700' href="/contact">Contact</Link>
+                            <Link className='text-black hover:text-purple-700' href="/">Contact</Link>
                         
                             {session?.user ? (
 

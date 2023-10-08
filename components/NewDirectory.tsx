@@ -1,14 +1,11 @@
 "use client";
-import { useEffect, useState } from 'react';
 import { Directory } from '@/utils/interfaces';
-import { createDirectory, getUser } from '../utils/dbQueries';
+import { createDirectory } from '../utils/dbQueries';
 import { NextComponentType } from 'next'
-// import { useQuery } from 'react-query';
-import {useSession} from 'next-auth/react'
+import {signIn, useSession} from 'next-auth/react'
 import { SubmitHandler, useForm } from "react-hook-form";
 import { alerts, redirectionAlert } from '@/utils/alerts';
-
-
+import Link from 'next/link';
 
 const NewDirectory : NextComponentType = () => {
     const { register, handleSubmit, formState: { errors }, reset } = useForm<Directory>({
@@ -18,8 +15,7 @@ const NewDirectory : NextComponentType = () => {
             content : ''
         }
     });
-    const { data: session, status, update } = useSession()    
-    const [aux, setAux] = useState(status)
+    const { data: session, status } = useSession()     
     
     const onSubmit : SubmitHandler<Directory> = async(data) => {
         
@@ -49,13 +45,31 @@ const NewDirectory : NextComponentType = () => {
         }
         
     }
-    useEffect(() => {    
-        update
-        console.log(status)
-        setAux(() => status)        
-        console.log(status)
-        console.log(aux)
-    }, [status])    
+    if(status === "unauthenticated"){
+        return(
+            <h1 className="text-3xl font-YsabeauInfant mt-64 md:text-center">
+                You are not allowed to create directories, please hit the 
+                <span>   </span>
+                    <span className="relative">
+                        <Link href="/registration">
+                            <span className="block absolute -inset-0.5 -skew-y-3 bg-purple-500" aria-hidden="true"></span>
+                            <span className="relative text-white hover:text-black">Registration </span>
+                        </Link>
+                    </span>
+                <span>   </span> 
+                or the
+                <span>   </span>
+                    <span className="relative">
+                        <button onClick={() => signIn()}>
+                            <span className="block absolute -inset-0.5 -skew-y-3 bg-purple-500" aria-hidden="true"></span>
+                            <span className="relative text-white hover:text-black">log in </span>
+                        </button>
+                    </span>
+                <span>   </span>                
+                button
+            </h1>
+        )
+    }
     return (
         <div className="p-8 flex flex justify-between items-center -inset -skew-y-3 bg-gradient-to-r from-purple-300 via-gray-100 rounded-lg">
             <div className='skew-y-3 font-EduSA bg-gradient-to-r from-blue-100 via-gray-100 w-1/2 h-[65vh] p-4 m-4 rounded lg'>                
@@ -179,19 +193,5 @@ const NewDirectory : NextComponentType = () => {
         </div>
     )
 }
-
-// export const getStaticProps: GetStaticProps = async(context) => {
-//     const directories = await prisma.directories.findMany({
-//         where: {
-//           userId: "1",
-//         },
-//       })
-//     return{
-//         props{
-//             directories 
-//         }
-//     }
-//   }
-
 
 export default NewDirectory;

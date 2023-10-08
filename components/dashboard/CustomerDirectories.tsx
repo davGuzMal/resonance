@@ -1,6 +1,6 @@
 import React, { useEffect, useState, MouseEvent } from 'react'
 import {useSession} from 'next-auth/react'
-import {Tooltip, Button} from "@nextui-org/react";
+import {Tooltip} from "@nextui-org/react";
 import { Directory } from '@/utils/interfaces'
 import { useQuery } from 'react-query'
 import { getDirectories } from '@/utils/dbQueries'
@@ -14,7 +14,11 @@ import { Filters } from './Filters'
 import { ShowDirectoryModal } from './ShowDirectoryModal'
 import { CreateDirectoryModal } from './CreateDirectoryModal';
 
-export const CustomerDirectories = () => {    
+
+type props = {
+  filter : string
+}
+export const CustomerDirectories = ({filter = ''} : props) => {    
     
   //Directories
     const [allDirectories, setAllDirectories] = useState<Directory[] | [] >()
@@ -23,7 +27,7 @@ export const CustomerDirectories = () => {
     const [sense, setSense] = useState('asc')
     const [filters, setFilters] = useState({
       s : '',
-      f : '',
+      f : filter,
       r : false,
       sort : ''      
     })
