@@ -13,21 +13,24 @@ import { IoBusinessSharp, IoAddCircleOutline } from 'react-icons/io5'
 import { Filters } from './Filters'
 import { ShowDirectoryModal } from './ShowDirectoryModal'
 import { CreateDirectoryModal } from './CreateDirectoryModal';
+import { useSearchParams } from 'next/navigation';
 
 
 type props = {
   filter : string
 }
 export const CustomerDirectories = ({filter = ''} : props) => {    
-    
+    const params = useSearchParams()
+    const preFilter : string  | null= params.get('preFilter')
+    // console.log(preFilter)
   //Directories
-    const [allDirectories, setAllDirectories] = useState<Directory[] | [] >()
+    const [allDirectories, setAllDirectories] = useState<Directory[] | [] | Array<any>>()
     const [showedDirectories, setShowedDirectories] = useState<Directory[]>()
     //Filters
     const [sense, setSense] = useState('asc')
     const [filters, setFilters] = useState({
       s : '',
-      f : filter,
+      f : preFilter,
       r : false,
       sort : ''      
     })
@@ -118,12 +121,13 @@ export const CustomerDirectories = ({filter = ''} : props) => {
           )        
         }
         if(filters.f !== ''){//filter by type
-          if(aux===undefined) aux = [... allDirectories]
+          console.log(filters.f)
+          if(aux===undefined) aux = allDirectories?.map(d => d)
           aux= aux?.filter(d => d.type === filters.f)
           
         }
         if(filters.sort !== '' ){//sort
-          if(aux===undefined) aux = [... allDirectories]
+          if(aux===undefined) aux = [... allDirectories as Array<any>]
                  
           aux?.sort((a, b) => {
             if(sense === 'asc'){

@@ -1,11 +1,13 @@
 import React, { useEffect } from 'react'
 import {useSession} from 'next-auth/react'
 import { getDirectories } from '@/utils/dbQueries'
-import { Directory } from '@/utils/interfaces'
+import { Directory, Type } from '@/utils/interfaces'
 import { useQuery } from 'react-query'
+import Link from 'next/link'
 
 export const TopCards = () => {
-    const { data: session, status } = useSession()    
+    const { data: session, status } = useSession()
+    const type : string[] = ["NOTE", "JOURNAL", "CONFESSION", "LETTER", "PERSONAL", "BUSINESS"]
     const {
         data: directories,
         error: error,
@@ -26,8 +28,7 @@ export const TopCards = () => {
         else{
             return null
         }
-    }
-    
+    }    
 
     useEffect(() => {
         refetch()
@@ -38,62 +39,24 @@ export const TopCards = () => {
         <h2>Loading...</h2>
     ):(
         <div className='grid lg:grid-cols-6 gap4 p-4'>
+            {type.map(t =>            
+                <Link href={{
+                    pathname : "/dashboard/directories",
+                    query : { preFilter : t}
+                }}
+                className='lg:col-span-2 col-span-1 bg-white flex justify-between w-full border p-4 rounded-lg'>
+                    {/* <div className='lg:col-span-2 col-span-1 bg-white flex justify-between w-full border p-4 rounded-lg'> */}
+                        <div className='flex flex-col w-full pb-4'>
+                            <p className='text-black text-2xl font-bold'>{t}</p>
+                            <p className='text-gray-600'>Last update : {getMostRecentUpdate(directories?.filter(dir => dir.type === t) as Directory[])}</p>
+                        </div>
+                        <p className='bg-purple-200 flex justify-center items-center p-2 rounded-lg h-1/2'>
+                            <span className='text-purple-700 text-lg'>{directories?.filter(dir => dir.type === t).length}</span>
+                        </p>
+                    {/* </div> */}
+                </Link>
+            )}           
             
-            <div className='lg:col-span-2 col-span-1 bg-white flex justify-between w-full border p-4 rounded-lg'>
-                <div className='flex flex-col w-full pb-4'>
-                    <p className='text-2xl font-bold'>Notes</p>
-                    <p className='text-gray-600'>Last update : {getMostRecentUpdate(directories?.filter(dir => dir.type ==='NOTE') as Directory[])}</p>
-                </div>
-                <p className='bg-green-200 flex justify-center items-center p-2 rounded-lg'>
-                    <span className='text-green-700 text-lg'>{directories?.filter(dir => dir.type ==='NOTE').length}</span>
-                </p>
-            </div>
-            
-            <div className='lg:col-span-2 col-span-1 bg-white flex justify-between w-full border p-4 rounded-lg'>
-                <div className='flex flex-col w-full pb-4'>
-                    <p className='text-2xl font-bold'>Journal</p>
-                    <p className='text-gray-600'>Last update : {getMostRecentUpdate(directories?.filter(dir => dir.type ==='JOURNAL') as Directory[])}</p>
-                </div>
-                <p className='bg-green-200 flex justify-center items-center p-2 rounded-lg'>
-                    <span className='text-green-700 text-lg'>{directories?.filter(dir => dir.type ==='JOURNAL').length}</span>
-                </p>
-            </div>
-            <div className='lg:col-span-2 col-span-1 bg-white flex justify-between w-full border p-4 rounded-lg'>
-                <div className='flex flex-col w-full pb-4'>
-                    <p className='text-2xl font-bold'>Confession</p>
-                    <p className='text-gray-600'>Last update : {getMostRecentUpdate(directories?.filter(dir => dir.type ==='CONFESSION') as Directory[])}</p>
-                </div>
-                <p className='bg-green-200 flex justify-center items-center p-2 rounded-lg'>
-                    <span className='text-green-700 text-lg'>{directories?.filter(dir => dir.type ==='CONFESSION').length}</span>
-                </p>
-            </div>
-            <div className='lg:col-span-2 col-span-1 bg-white flex justify-between w-full border p-4 rounded-lg'>
-                <div className='flex flex-col w-full pb-4'>
-                    <p className='text-2xl font-bold'>Letter</p>
-                    <p className='text-gray-600'>Last update : {getMostRecentUpdate(directories?.filter(dir => dir.type ==='LETTER') as Directory[])}</p>
-                </div>
-                <p className='bg-green-200 flex justify-center items-center p-2 rounded-lg'>
-                    <span className='text-green-700 text-lg'>{directories?.filter(dir => dir.type ==='LETTER').length}</span>
-                </p>
-            </div>
-            <div className='lg:col-span-2 col-span-1 bg-white flex justify-between w-full border p-4 rounded-lg'>
-                <div className='flex flex-col w-full pb-4'>
-                    <p className='text-2xl font-bold'>Business</p>
-                    <p className='text-gray-600'>Last update : {getMostRecentUpdate(directories?.filter(dir => dir.type ==='BUSINESS') as Directory[])}</p>
-                </div>
-                <p className='bg-green-200 flex justify-center items-center p-2 rounded-lg'>
-                    <span className='text-green-700 text-lg'>{directories?.filter(dir => dir.type ==='BUSINESS').length}</span>
-                </p>
-            </div>
-            <div className='flex bg-white justify-between w-full border p-4 rounded-lg'>
-                <div className='flex flex-col w-full pb-4'>
-                    <p className='text-2xl font-bold'>Personal</p>
-                    <p className='text-gray-600'>Last update : {getMostRecentUpdate(directories?.filter(dir => dir.type ==='PERSONAL') as Directory[])}</p>
-                </div>
-                <p className='bg-green-200 flex justify-center items-center p-2 rounded-lg'>
-                    <span className='text-green-700 text-lg'>{directories?.filter(dir => dir.type ==='PERSONAL').length}</span>
-                </p>
-            </div>
         </div>
     )}
     </main>
