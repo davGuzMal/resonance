@@ -4,7 +4,7 @@ type props = {
     filters : any,
     setFilters : Dispatch<React.SetStateAction<{
         s: string;
-        f: string;
+        f: string | null;
         r: boolean;
         sort: string;
     }>>

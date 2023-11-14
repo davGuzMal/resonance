@@ -16,10 +16,10 @@ import { CreateDirectoryModal } from './CreateDirectoryModal';
 import { useSearchParams } from 'next/navigation';
 
 
-type props = {
-  filter : string
-}
-export const CustomerDirectories = ({filter = ''} : props) => {    
+// type props = {
+//   filter : string
+// }
+export const CustomerDirectories = () => {    
     const params = useSearchParams()
     const preFilter : string  | null= params.get('preFilter')
     // console.log(preFilter)
@@ -121,10 +121,10 @@ export const CustomerDirectories = ({filter = ''} : props) => {
           )        
         }
         if(filters.f !== ''){//filter by type
-          console.log(filters.f)
+          // console.log(filters.f)
           if(aux===undefined) aux = allDirectories?.map(d => d)
           aux= aux?.filter(d => d.type === filters.f)
-          
+          // console.log(aux)
         }
         if(filters.sort !== '' ){//sort
           if(aux===undefined) aux = [... allDirectories as Array<any>]
@@ -154,67 +154,82 @@ export const CustomerDirectories = ({filter = ''} : props) => {
           
         }
       }
-      if(aux !== undefined) setShowedDirectories(aux)
-      else setShowedDirectories(directories)     
-    }, [filters])
+      if(aux !== undefined) {        
+        // console.log(aux)
+        setShowedDirectories(aux)
+        // console.log(showedDirectories)
+      }
+      else {
+
+        setShowedDirectories(directories)    
+      }
+      // console.log(showedDirectories)
+    }, [filters])    
 
     //use Effect for save directories in local states once the query has had success
-    useEffect(() => {        
-        setShowedDirectories(directories)
-        setAllDirectories(directories)        
+    useEffect(() => {
+      setAllDirectories(directories) 
+      setShowedDirectories(directories)
+              
     }, [isSuccess])
     
   return (
-    <div className='bg-gray-100 min-h-screen p-4'>      
-      <div className='font-YsabeauInfant text-xl w-full m-auto p-4 border rounded-lg bg-white overflow-y-auto'>
-      <Filters
-        filters = {filters}
-        setFilters = {setFilters}
-      /> 
-        <div className='my-3 p-2 grid md:grid-cols-4 sm:grid-cols-3 grid-cols-2 items-center justify-between'>
-          <span className='flex'>
-            <Tooltip color='secondary' placement='top' offset={-2} content={
-              <div className='font-YsabeauOffice'>Add new directory</div>
-            }>              
-              <IoAddCircleOutline className='text-purple-800 text-3xl' name='add' onClick={openModalAdd}/>             
-            </Tooltip>
-            <button className='ml-16' value='title' onClick={(e)=>sortBy(e)}>Title</button>
-          </span>
-          <span className='sm:text-left text-right'><button className='ml-8'>Content</button></span>
-          <span className='hidden md:grid'><button value = 'updateDate' onClick={(e)=>sortBy(e)} className='text-left'>Last update</button></span>
-          <span className='sm:flex hidden md:grid'><button value = 'type'className='text-left' onClick={(e)=>sortBy(e)}>Type</button></span>
-        </div>
-        <ShowDirectoryModal
-          isOpen = {isOpen}
-          closeModal = {closeModal}
-          modalDirectory = {modalDirectory}
-        />
-        <CreateDirectoryModal
-          isOpen = {isOpenAdd}
-          closeModal = {closeModalAdd}
-        />
-        <ul>
-                {showedDirectories?.map((dir, id)=>(
-                    <li key={id} className='bg-gray-50 hover:bg-gray-100 rounded-lg my-3 p-2 grid md:grid-cols-4 sm:grid-cols-3 grid-cols-2 items-center justify-between cursos-pointer'>
-                        <div className='flex items-center'>
-                            <div className='bg-purple-100 p-3 rounded-lg'>
-                                {dir.type === 'NOTE' ? (<BiNotepad className='text-purple-800'/>)
-                                :dir.type === 'JOURNAL' ? (<BsJournalBookmark className='text-purple-800'/>)
-                                :dir.type === 'CONFESSION' ? (<FaUserSecret className='text-purple-800'/>)
-                                :dir.type === 'LETTER' ? (<SlEnvolopeLetter className='text-purple-800'/>)
-                                :dir.type === 'PERSONAL' ? (<AiFillLock className='text-purple-800'/>)
-                                :dir.type === 'BUSINESS' ? (<IoBusinessSharp className='text-purple-800'/>)
-                            : null}
+    <>
+        {isLoading ? <h1>Loading...</h1>
+        :
+        <div className='bg-gray-100 min-h-screen p-4'>      
+          <div className='font-YsabeauInfant text-xl w-full m-auto p-4 border rounded-lg bg-white overflow-y-auto'>
+          <Filters
+            filters = {filters}
+            setFilters = {setFilters}
+          /> 
+            <div className='my-3 p-2 grid md:grid-cols-4 sm:grid-cols-3 grid-cols-2 items-center justify-between'>
+              <span className='flex'>
+                <Tooltip color='secondary' placement='top' offset={-2} content={
+                  <div className='font-YsabeauOffice'>Add new directory</div>
+                }>              
+                  <IoAddCircleOutline className='text-purple-800 text-3xl' name='add' onClick={openModalAdd}/>             
+                </Tooltip>
+                <button className='ml-16' value='title' onClick={(e)=>sortBy(e)}>Title</button>
+              </span>
+              <span className='sm:text-left text-right'><button className='ml-8'>Content</button></span>
+              <span className='hidden md:grid'><button value = 'updateDate' onClick={(e)=>sortBy(e)} className='text-left'>Last update</button></span>
+              <span className='sm:flex hidden md:grid'><button value = 'type'className='text-left' onClick={(e)=>sortBy(e)}>Type</button></span>
+            </div>
+            <ShowDirectoryModal
+              isOpen = {isOpen}
+              closeModal = {closeModal}
+              modalDirectory = {modalDirectory}
+            />
+            <CreateDirectoryModal
+              isOpen = {isOpenAdd}
+              closeModal = {closeModalAdd}
+            />
+            <ul>
+                    {showedDirectories?.map((dir, id)=>(
+                        <li key={id} className='bg-gray-50 hover:bg-gray-100 rounded-lg my-3 p-2 grid md:grid-cols-4 sm:grid-cols-3 grid-cols-2 items-center justify-between cursos-pointer'>
+                            <div className='flex items-center'>
+                                <div className='bg-purple-100 p-3 rounded-lg'>
+                                    {dir.type === 'NOTE' ? (<BiNotepad className='text-purple-800'/>)
+                                    :dir.type === 'JOURNAL' ? (<BsJournalBookmark className='text-purple-800'/>)
+                                    :dir.type === 'CONFESSION' ? (<FaUserSecret className='text-purple-800'/>)
+                                    :dir.type === 'LETTER' ? (<SlEnvolopeLetter className='text-purple-800'/>)
+                                    :dir.type === 'PERSONAL' ? (<AiFillLock className='text-purple-800'/>)
+                                    :dir.type === 'BUSINESS' ? (<IoBusinessSharp className='text-purple-800'/>)
+                                : null}
+                                </div>
+                                <p className='pl-4'>{dir.title}</p>
                             </div>
-                            <p className='pl-4'>{dir.title}</p>
-                        </div>
-                        <p className='text-gray-600 sm:text-left text-right'><button name='show'onClick={()=>openModal(dir)}>{dir.content.slice(0,20)} ...</button></p>
-                        <p className='hidden md:flex'>{dir.updateDate.toString().slice(0, dir.updateDate.toString().indexOf('T'))}</p>
-                        <p className='sm:flex hidden justify-between items-center'>{dir.type}</p>
-                    </li>
-                ))}
-            </ul>
-      </div>
-    </div>
+                            <p className='text-gray-600 sm:text-left text-right'><button name='show'onClick={()=>openModal(dir)}>{dir.content.slice(0,20)} ...</button></p>
+                            <p className='hidden md:flex'>{dir.updateDate.toString().slice(0, dir.updateDate.toString().indexOf('T'))}</p>
+                            <p className='sm:flex hidden justify-between items-center'>{dir.type}</p>
+                        </li>
+                    ))}
+                </ul>
+          </div>
+        </div>
+      }
+    
+    </>
   )
 }

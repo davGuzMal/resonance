@@ -51,7 +51,7 @@ export const updateUser = async (data: User) => {
     return User
 }
 
-export const getDirectories = async (id: string ='all', email: string='') => {
+export const getDirectories = async (id: string ='', email: string='') => {
     
     // const options = {
     //     headers: {

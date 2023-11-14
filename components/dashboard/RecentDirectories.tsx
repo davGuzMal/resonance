@@ -34,6 +34,7 @@ export const RecentDirectories = () => {
         isSuccess : isSuccess,
         refetch
     } = useQuery(['directories'], ()=>getDirectories(session?.user?.id!, session?.user?.email!))
+    
     //open and close modal to show directory
     function closeModal() {
         setIsOpen(false)

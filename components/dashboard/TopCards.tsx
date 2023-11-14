@@ -17,7 +17,7 @@ export const TopCards = () => {
     } = useQuery(['directories'], ()=>getDirectories(session?.user?.id!, session?.user?.email!))
     
     const getMostRecentUpdate = (array : Directory[]) => {
-        if (array.length){
+        if (array?.length){
 
             const dates = array.map(el => el.updateDate)
             let mxDate = dates.reduce(function (a, b) {
