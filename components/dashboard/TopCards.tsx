@@ -4,9 +4,15 @@ import { getDirectories } from '@/utils/dbQueries'
 import { Directory, Type } from '@/utils/interfaces'
 import { useQuery } from 'react-query'
 import Link from 'next/link'
+import { Session } from '@auth0/nextjs-auth0'
 
-export const TopCards = () => {
-    const { data: session, status } = useSession()
+type props = {
+    session : any
+}
+
+export const TopCards = ({ session } : props) => {
+    // const { data: session, status } = useSession()
+    // console.log(session)
     const type : string[] = ["NOTE", "JOURNAL", "CONFESSION", "LETTER", "PERSONAL", "BUSINESS"]
     const {
         data: directories,
@@ -30,9 +36,9 @@ export const TopCards = () => {
         }
     }    
 
-    useEffect(() => {
-        refetch()
-    }, [isLoading])
+    // useEffect(() => {
+    //     refetch()
+    // }, [status])
   return (
       <main>
     {isLoading ? (

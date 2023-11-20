@@ -93,7 +93,7 @@ export const CustomerDirectories = () => {
         sort: e.target.value
       })      
     }
-    //Use effect for update directories when there is a change
+    //Use effect for update directories when there is a change in session status
     useEffect(() => {    
         refetch
         

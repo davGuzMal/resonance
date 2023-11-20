@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import {useSession} from 'next-auth/react'
 import { Chart as ChartJS, 
     CategoryScale,
     LinearScale,
@@ -20,7 +21,12 @@ ChartJS.register(
     Legend
   );
 
-export const BarChart = () => {
+type props = {
+    session : any
+}
+export const BarChart = ({ session } : props) => {
+    //session
+    // const { data: session, status } = useSession()   
     const [chartData, setChartData] = useState<any>({
         datasets : []
     })
@@ -33,7 +39,7 @@ export const BarChart = () => {
         isLoading : isLoading,
         isSuccess : isSuccess,
         refetch
-    } = useQuery(['directories'], ()=>getDirectories())
+    } = useQuery(['directories'], ()=>getDirectories(session?.user?.id!, session?.user?.email!))
     
     //AUXILIAR VARIABLES TO CLASSIFY CHART DATA
     const today = new Date()
