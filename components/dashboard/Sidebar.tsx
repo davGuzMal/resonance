@@ -7,8 +7,11 @@ import { VscFiles } from 'react-icons/vsc'
 
 type SidebarProps = {
     children: React.ReactNode;
+    session : any
 }
 export const Sidebar = (props : SidebarProps) => {
+    const { session } = props
+    
   return (
     <div className='flex'>
         <div className='fixed w-20 h-screen p-4 bg-white border-r-[1px] flex flex-col justify-between'>
@@ -30,12 +33,19 @@ export const Sidebar = (props : SidebarProps) => {
                         <VscFiles size={20}/>
                     </div>
                 </Link>
-                <span className='border-b-[1px] border-gray-200 w-full p-2'></span>
-                <Link href='/dashboard/customers'>
-                    <div className='bg-gray-100 hover:bg-gray-200 cursor-pinter p-3 rounded-lg inline-block'>
-                        <RxPerson size={20}/>
-                    </div>
-                </Link>
+                {session?.user?.role === "ADMIN" ?
+                    <>
+                    
+                        <span className='border-b-[1px] border-gray-200 w-full p-2'></span>
+                        <Link href='/dashboard/customers'>
+                            <div className='bg-gray-100 hover:bg-gray-200 cursor-pinter p-3 rounded-lg inline-block'>
+                                <RxPerson size={20}/>
+                            </div>
+                        </Link>
+                    </>
+                    : null
+                
+                }
                 <span className='border-b-[1px] border-gray-200 w-full p-2'></span>
                 <Link href='/dashboard/settings'>
                     <div className='bg-gray-100 hover:bg-gray-200 cursor-pinter p-3 rounded-lg inline-block'>

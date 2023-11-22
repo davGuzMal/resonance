@@ -11,8 +11,7 @@ type props = {
 }
 
 export const TopCards = ({ session } : props) => {
-    // const { data: session, status } = useSession()
-    // console.log(session)
+    
     const type : string[] = ["NOTE", "JOURNAL", "CONFESSION", "LETTER", "PERSONAL", "BUSINESS"]
     const {
         data: directories,
@@ -35,10 +34,7 @@ export const TopCards = ({ session } : props) => {
             return null
         }
     }    
-
-    // useEffect(() => {
-    //     refetch()
-    // }, [status])
+   
   return (
       <main>
     {isLoading ? (

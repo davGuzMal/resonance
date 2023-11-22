@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import {useSession} from 'next-auth/react'
+// import {useSession} from 'next-auth/react'
 import { getDirectories } from '@/utils/dbQueries'
 import { useQuery } from 'react-query'
 import { BiNotepad } from 'react-icons/bi'
@@ -16,8 +16,7 @@ type props = {
 }
 
 export const RecentDirectories = ({ session } : props) => {
-    //session
-    // const { data: session, status } = useSession()    
+       
     //state to store recent directories and modal to show directory
     const [recentDir, setRecentDir] = useState<Directory[]>()
     const [isOpen, setIsOpen] = useState(false)
@@ -58,11 +57,7 @@ export const RecentDirectories = ({ session } : props) => {
     //set period for recent directories, currently 15 days
     const today = new Date()
     const recentDays = new Date(today.getFullYear(),today.getMonth(), today.getDate()-15)
-    //Use effect for update directories when there is a change in session status
-    // useEffect(() => {    
-    //     refetch        
-    // }, [status])
-    // console.log(recentDir)
+    
     //Use effect for save recent directories in local state
     useEffect(()=>{
         setRecentDir(directories?.filter(dir => new Date(dir.updateDate)>recentDays))

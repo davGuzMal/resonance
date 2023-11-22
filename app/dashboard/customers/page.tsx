@@ -36,7 +36,9 @@ const Customers : NextPage = () => {
     }
   return (
     <main className='bg-gray-100 min-h-screen'>        
-        <Sidebar>
+        <Sidebar
+        session = {session}
+        >
             <Header
               page = "Customers"
             />

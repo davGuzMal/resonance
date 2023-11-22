@@ -16,13 +16,8 @@ import { CreateDirectoryModal } from './CreateDirectoryModal';
 import { useSearchParams } from 'next/navigation';
 
 
-// type props = {
-//   filter : string
-// }
 export const CustomerDirectories = () => {    
-    const params = useSearchParams()
-    const preFilter : string  | null= params.get('preFilter')
-    // console.log(preFilter)
+    
   //Directories
     const [allDirectories, setAllDirectories] = useState<Directory[] | [] | Array<any>>()
     const [showedDirectories, setShowedDirectories] = useState<Directory[]>()
@@ -30,7 +25,7 @@ export const CustomerDirectories = () => {
     const [sense, setSense] = useState('asc')
     const [filters, setFilters] = useState({
       s : '',
-      f : preFilter,
+      f : '',
       r : false,
       sort : ''      
     })
@@ -121,10 +116,9 @@ export const CustomerDirectories = () => {
           )        
         }
         if(filters.f !== ''){//filter by type
-          // console.log(filters.f)
+          
           if(aux===undefined) aux = allDirectories?.map(d => d)
-          aux= aux?.filter(d => d.type === filters.f)
-          // console.log(aux)
+          aux= aux?.filter(d => d.type === filters.f)         
         }
         if(filters.sort !== '' ){//sort
           if(aux===undefined) aux = [... allDirectories as Array<any>]
@@ -150,27 +144,24 @@ export const CustomerDirectories = () => {
             }
             return 0
           }
-          )    
-          
+          )
         }
       }
       if(aux !== undefined) {        
-        // console.log(aux)
-        setShowedDirectories(aux)
-        // console.log(showedDirectories)
+        
+        setShowedDirectories(aux)        
       }
       else {
 
         setShowedDirectories(directories)    
-      }
-      // console.log(showedDirectories)
+      }      
     }, [filters])    
 
     //use Effect for save directories in local states once the query has had success
     useEffect(() => {
+      
       setAllDirectories(directories) 
-      setShowedDirectories(directories)
-              
+      setShowedDirectories(directories)              
     }, [isSuccess])
     
   return (
