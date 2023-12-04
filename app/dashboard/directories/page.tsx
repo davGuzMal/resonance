@@ -5,6 +5,7 @@ import Header from '@/components/dashboard/Header';
 import { Sidebar } from '@/components/dashboard/Sidebar';
 import { CustomerDirectories } from '@/components/dashboard/CustomerDirectories';
 import Link from 'next/link';
+import Layout from '@/components/Layout';
 
 
 const Directories : NextPage = () => {
@@ -35,16 +36,18 @@ const Directories : NextPage = () => {
         )
     }
   return (
-    <main className='bg-gray-100 min-h-screen'>        
-        <Sidebar
-        session = {session}
-        >
-            <Header
-              page = "Directories"
-            />
-            <CustomerDirectories/>
-        </Sidebar>        
-    </main>
+    <Layout>
+        <main className='bg-gray-100 min-h-screen'>        
+            <Sidebar
+            session = {session}
+            >
+                <Header
+                page = "Directories"
+                />
+                <CustomerDirectories/>
+            </Sidebar>        
+        </main>
+    </Layout>
   )
 }
 

@@ -30,8 +30,7 @@ export const CreateDirectoryModal = ({isOpen, closeModal} : props) => {
             userId : session?.user?.id!
         }
         const newDirectory = await createDirectory(data)
-        if(newDirectory){
-            console.log(newDirectory)
+        if(newDirectory){            
             redirectionAlert({
                     icon: 'info',
                 title: '<strong>New directory created</strong>',

@@ -2,13 +2,16 @@
 import type { NextPage } from 'next'
 import  NewDirectory  from "../../components/NewDirectory"
 import Navbar from '@/components/Navbar';
+import Layout from '@/components/Layout';
 // import createDB from '@/utils/createBD';
 
 const CreateFile : NextPage = () => {
   return (    
-          <Navbar>
-            <NewDirectory/>
-          </Navbar>    
+    <Layout>
+      <Navbar>
+        <NewDirectory/>
+      </Navbar>    
+    </Layout>
   )
 }
 

@@ -7,6 +7,7 @@ import { TopCards } from '@/components/dashboard/TopCards';
 import { BarChart } from '@/components/dashboard/BarChart';
 import { RecentDirectories } from '@/components/dashboard/RecentDirectories';
 import Link from 'next/link';
+import Layout from '@/components/Layout';
 
 const Dashboard : NextPage = () => {
     
@@ -37,27 +38,30 @@ const Dashboard : NextPage = () => {
         )
     }
     return (
-        <main className='bg-gray-100 min-h-screen'>
-            <Sidebar
-            session = {session}
-            >
-                <Header
-                page="Dashboard"
-                />
-                <TopCards
-                session = {session}
-                />
-                <div className='p-4 grid md:grid-cols-3 grid-cols-1 gap-4'>
-                    <BarChart
+        <Layout>
+
+                <main className='bg-gray-100 min-h-screen'>
+                    <Sidebar
                     session = {session}
-                    />
-                    <RecentDirectories
-                    session = {session}
-                    />
-                </div>
-            </Sidebar>
-        </main>
-        
+                    >
+                        <Header
+                        page="Dashboard"
+                        />
+                        <TopCards
+                        session = {session}
+                        />
+                        <div className='p-4 grid md:grid-cols-3 grid-cols-1 gap-4'>
+                            <BarChart
+                            session = {session}
+                            />
+                            <RecentDirectories
+                            session = {session}
+                            />
+                        </div>
+                    </Sidebar>
+                </main>
+                
+        </Layout>
     )
 }
 

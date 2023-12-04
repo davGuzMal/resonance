@@ -39,9 +39,9 @@ const Navbar  = (props : NavbarProps) => {
                         
                             {session?.user ? (
 
-                                <Link className='flex text-black hover:text-purple-700' href="/createfile">
+                                <Link className='flex text-black hover:text-purple-700 normal-case' href="/createfile">
                                     <IoAddCircleOutline/>
-                                    Add new file
+                                    Add new directory
                                 </Link>
                             ) : (
                                 null
@@ -106,13 +106,7 @@ const Navbar  = (props : NavbarProps) => {
                                             <Dropdown.Item key="directories"><Link className='text-black' href='/dashboard/directories'>Directories</Link></Dropdown.Item>
                                             <Dropdown.Item key="logout" withDivider color="error"><button onClick={()=>signOut()}>Logout</button></Dropdown.Item>
                                         </Dropdown.Menu>                                        
-                                    </Dropdown>                                    
-                                
-                                {/* <button
-                                className='hover:text-purple-700'
-                                onClick={() => signOut()}>
-                                    <FiLogOut/> 
-                                </button> */}
+                                    </Dropdown>
                             </div>                            
                         )}
                     </div>

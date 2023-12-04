@@ -35,7 +35,7 @@ export const Carousel = () => {
             inline={{
             style: {
                 width: "100%",
-                maxWidth: "1000px",
+                maxWidth: "95vw",
                 aspectRatio: "3 / 2",
                 margin: "0 auto",
                 // position : "absolute",                              

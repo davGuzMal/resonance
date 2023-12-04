@@ -121,3 +121,28 @@ export async function PUT(request: Request) {
         return NextResponse.json({ message: "Error: " + error })
     }
 }
+
+export async function DELETE(request: NextRequest) {
+
+    console.log(request.json())
+    const  body  =  await request.json()
+    console.log(body)
+      
+    try {
+        const user = await prisma.user.delete({
+            where : {
+                id : id
+            }
+        })
+        if(user) {
+            return NextResponse.json({user} , {status:200} )
+        }
+        else {
+
+            return NextResponse.json({message: "It seems that something went wrong, please try again" }, {status: 401})
+        }
+    } catch (error) {
+        console.log(error)
+        return NextResponse.json({ message: "Error: " + error })
+    }
+}

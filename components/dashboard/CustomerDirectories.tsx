@@ -13,7 +13,7 @@ import { IoBusinessSharp, IoAddCircleOutline } from 'react-icons/io5'
 import { Filters } from './Filters'
 import { ShowDirectoryModal } from './ShowDirectoryModal'
 import { CreateDirectoryModal } from './CreateDirectoryModal';
-import { useSearchParams } from 'next/navigation';
+
 
 
 export const CustomerDirectories = () => {    

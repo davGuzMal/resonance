@@ -2,10 +2,10 @@
 import type { NextPage } from 'next'
 import { useSession, signIn } from 'next-auth/react';
 import Header from '@/components/dashboard/Header';
-import { QueryClient, QueryClientProvider } from 'react-query'
 import { Sidebar } from '@/components/dashboard/Sidebar';
 import CustomerSettings from '@/components/dashboard/CustomerSettings';
 import Link from 'next/link';
+import Layout from '@/components/Layout';
 
 
 const Settings : NextPage = () => {
@@ -36,16 +36,19 @@ const Settings : NextPage = () => {
         )
     }
   return (
-    <main className='bg-gray-100 min-h-screen'>        
-            <Sidebar
-            session = {session}
-            >
-                <Header
-                  page = "Settings"
-                />
-                <CustomerSettings/>
-            </Sidebar>        
-    </main>
+    <Layout>
+
+        <main className='bg-gray-100 min-h-screen'>        
+                <Sidebar
+                session = {session}
+                >
+                    <Header
+                    page = "Settings"
+                    />
+                    <CustomerSettings/>
+                </Sidebar>        
+        </main>
+    </Layout>
   )
 }
 

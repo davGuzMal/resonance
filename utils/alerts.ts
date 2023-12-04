@@ -56,7 +56,7 @@ export const redirectionAlert = ({
     showCloseButton = true,
     confirmButtonAriaLabel = 'Thumbs up, great!',
     cancelButtonText = 'Cancelar',
-    showCancelButton = false,
+    showCancelButton = true,
     allowOutsideClick = false,
     allowEscapeKey = false,
     link

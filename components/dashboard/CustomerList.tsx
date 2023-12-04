@@ -1,9 +1,13 @@
 import { getAllUsers } from '@/utils/dbQueries'
-import { Directory } from '@/utils/interfaces'
+import { Directory, User } from '@/utils/interfaces'
 import React, { useEffect } from 'react'
-import { BsPersonFill, BsThreeDotsVertical, BsFillCheckCircleFill } from 'react-icons/bs'
+import { BsPersonFill, BsFillCheckCircleFill } from 'react-icons/bs'
 import { MdRadioButtonUnchecked } from 'react-icons/md'
+import { FaMinusCircle } from "react-icons/fa";
 import { useQuery } from 'react-query'
+import {Tooltip} from "@nextui-org/react";
+import { deleteUser } from '@/utils/dbQueries'
+import { redirectionAlert } from '@/utils/alerts'
 
 export const CustomerList = () => {
     const {
@@ -26,6 +30,21 @@ export const CustomerList = () => {
         else{
             return null
         }
+    }
+    const onDelete = async (user : User) => {
+        // redirectionAlert({
+        //     icon: 'info',
+        //     title: '<strong>Are you sure of delete this user?</strong>',
+        //     html: 'You are about to delete the user for '+user.name+', please confirm this action ',
+        //     confirmButtonText: 'Confirm!',
+        //     confirmButtonAriaLabel: 'Thumbs up, great!',
+        //     link: '/dashboard/directories'
+        // })
+        // console.log(typeof(user.id))
+
+        const userDeleted = await deleteUser(user.id)
+
+        
     }
 
     useEffect(()=>{
@@ -55,7 +74,13 @@ export const CustomerList = () => {
                             {user.emailVerified 
                             ? <BsFillCheckCircleFill className='text-green-600'/>
                             : <MdRadioButtonUnchecked className='text-red-600'/>}
-                            <BsThreeDotsVertical/>                            
+                            <Tooltip color='error' placement='left' offset={-2} content={
+                                <div className='font-YsabeauOffice w-full'>
+                                    Delete user
+                                </div>
+                            }>              
+                                <FaMinusCircle className='text-red-600' name='delete' onClick={() => onDelete(user)}/>             
+                            </Tooltip>                 
                         </div>
                     </li>
                 ))}

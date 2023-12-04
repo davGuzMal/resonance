@@ -5,6 +5,7 @@ import { SessionProvider } from 'next-auth/react';
 import { QueryClient, QueryClientProvider } from 'react-query'
 import { ReactQueryDevtools } from 'react-query/devtools'
 import { NextUIProvider } from '@nextui-org/react'
+import { AnimatePresence } from 'framer-motion'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -24,10 +25,13 @@ export default function RootLayout({
       <body className={inter.className}>
         <QueryClientProvider client={queryClient}>
           <SessionProvider>
-          <NextUIProvider>
-            <ReactQueryDevtools />
-            {children}
-          </NextUIProvider>
+            <NextUIProvider>
+              <AnimatePresence mode="wait" initial={false} onExitComplete={() => window.scrollTo(0, 0)}>
+                <ReactQueryDevtools />
+                  
+                  {children}
+                </AnimatePresence>
+            </NextUIProvider>
           </SessionProvider>
         </QueryClientProvider>
       </body>
