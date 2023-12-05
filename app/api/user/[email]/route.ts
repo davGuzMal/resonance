@@ -32,6 +32,4 @@ export async function GET(request: NextRequest, { params }: { params: { email: s
             
             return NextResponse.json({ message: "Error: " + error })
         }        
-
-
 }

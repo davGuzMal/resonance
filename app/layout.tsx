@@ -26,11 +26,11 @@ export default function RootLayout({
         <QueryClientProvider client={queryClient}>
           <SessionProvider>
             <NextUIProvider>
-              <AnimatePresence mode="wait" initial={false} onExitComplete={() => window.scrollTo(0, 0)}>
                 <ReactQueryDevtools />
+              <AnimatePresence mode="wait" initial={false} onExitComplete={() => window.scrollTo(0, 0)}>
                   
                   {children}
-                </AnimatePresence>
+              </AnimatePresence>
             </NextUIProvider>
           </SessionProvider>
         </QueryClientProvider>

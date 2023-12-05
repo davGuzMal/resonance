@@ -90,17 +90,15 @@ export const getAllUsers = async () => {
 }
 
 export const deleteUser = async (id: string) => {
-    const options = {     
+    const options = {
         headers: {
-                  'Accept': 'application/json',
-                  'Content-Type': 'application/json'
-                },
-        method: "DELETE",
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        method: "POST",
         body: JSON.stringify(id)
-    }
-    const resp = await fetch('/api/user/', options)
-    .then(res => console.log(res))
-    // console.log(options)
-    // const resp = options.body
+    }    
+    const resp = await fetch('/api/user/delete', options)
+    .then(res => res.json())
     return resp
 }

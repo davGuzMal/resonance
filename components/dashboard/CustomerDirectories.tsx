@@ -3,6 +3,7 @@ import {useSession} from 'next-auth/react'
 import {Tooltip} from "@nextui-org/react";
 import { Directory } from '@/utils/interfaces'
 import { useQuery } from 'react-query'
+// import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { getDirectories } from '@/utils/dbQueries'
 import { BiNotepad } from 'react-icons/bi'
 import { BsJournalBookmark } from 'react-icons/bs'
@@ -32,13 +33,25 @@ export const CustomerDirectories = () => {
     //user session
     const { data: session, status } = useSession()
     //Query to get directories from db
+    // const queryClient = useQueryClient()
+    // const { 
+    //   isLoading, 
+    //   isError, 
+    //   isSuccess, 
+    //   data : directories, 
+    //   error, 
+    //   refetch } = useQuery({
+    //   queryKey: ['directories'],
+    //   queryFn: ()=>getDirectories(session?.user?.id!, session?.user?.email!),
+    // })
+    
     const {
         data: directories,
         error: error,
         isLoading : isLoading,
         isSuccess : isSuccess,
         refetch
-    } = useQuery(['directories'], ()=>getDirectories(session?.user?.id!, session?.user?.email!))
+    } = useQuery(['directories', status], ()=>getDirectories(session?.user?.id!, session?.user?.email!))
     //open modal to see directory content
     const [isOpen, setIsOpen] = useState(false)
     const [isOpenAdd, setIsOpenAdd] = useState(false)
@@ -89,10 +102,11 @@ export const CustomerDirectories = () => {
       })      
     }
     //Use effect for update directories when there is a change in session status
-    useEffect(() => {    
-        refetch
+    useEffect(() => {   
+      console.log(status)
+      if(status==="authenticated") refetch
         
-    }, [status])
+    }, [status === "authenticated"])
     //Use effect to visualize directories after filter or sort
     useEffect(() => {
       let aux : Directory[] | Array<any> | undefined
@@ -159,9 +173,15 @@ export const CustomerDirectories = () => {
 
     //use Effect for save directories in local states once the query has had success
     useEffect(() => {
-      
-      setAllDirectories(directories) 
-      setShowedDirectories(directories)              
+      console.log(directories)
+      if(directories !==undefined){
+
+        setAllDirectories(directories) 
+        setShowedDirectories(directories)              
+      }
+      else{
+        refetch
+      }
     }, [isSuccess])
     
   return (

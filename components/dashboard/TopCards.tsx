@@ -41,21 +41,20 @@ export const TopCards = ({ session } : props) => {
         <h2>Loading...</h2>
     ):(
         <div className='grid lg:grid-cols-6 gap4 p-4'>
-            {type.map(t =>            
+            {type.map((t, id) =>            
                 <Link href={{
                     pathname : "/dashboard/directories",
                     query : { preFilter : t}
                 }}
-                className='lg:col-span-2 col-span-1 bg-white flex justify-between w-full border p-4 rounded-lg'>
-                    {/* <div className='lg:col-span-2 col-span-1 bg-white flex justify-between w-full border p-4 rounded-lg'> */}
+                key={id}
+                className='lg:col-span-2 col-span-1 bg-white flex justify-between w-full border p-4 rounded-lg'>                    
                         <div className='flex flex-col w-full pb-4'>
                             <p className='text-black text-2xl font-bold'>{t}</p>
                             <p className='text-gray-600'>Last update : {getMostRecentUpdate(directories?.filter(dir => dir.type === t) as Directory[])}</p>
                         </div>
                         <p className='bg-purple-200 flex justify-center items-center p-2 rounded-lg h-1/2'>
                             <span className='text-purple-700 text-lg'>{directories?.filter(dir => dir.type === t).length}</span>
-                        </p>
-                    {/* </div> */}
+                        </p>                    
                 </Link>
             )}           
             

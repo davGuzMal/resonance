@@ -16,8 +16,7 @@ const CustomerSettings = () => {
         email : '',
         emailVerified: new Date()
     }
-}); 
-  console.log(session?.user)
+});   
   const onSubmit : SubmitHandler<User> = async(data) => {
     data = {
       ...data,

@@ -7,7 +7,8 @@ import { FaMinusCircle } from "react-icons/fa";
 import { useQuery } from 'react-query'
 import {Tooltip} from "@nextui-org/react";
 import { deleteUser } from '@/utils/dbQueries'
-import { redirectionAlert } from '@/utils/alerts'
+// import { alerts } from '@/utils/alerts'
+import Swal from 'sweetalert2'
 
 export const CustomerList = () => {
     const {
@@ -32,17 +33,54 @@ export const CustomerList = () => {
         }
     }
     const onDelete = async (user : User) => {
-        // redirectionAlert({
-        //     icon: 'info',
+        // alerts({
+        //     icon: 'warning',
         //     title: '<strong>Are you sure of delete this user?</strong>',
         //     html: 'You are about to delete the user for '+user.name+', please confirm this action ',
-        //     confirmButtonText: 'Confirm!',
-        //     confirmButtonAriaLabel: 'Thumbs up, great!',
-        //     link: '/dashboard/directories'
+        //     confirmButtonText: 'Confirm!',            
+        //     confirmButtonAriaLabel: 'Thumbs up, great!',            
         // })
-        // console.log(typeof(user.id))
+        Swal.fire({
+            icon: 'warning',
+            title: '<strong>Are you sure of delete this user?</strong>',
+            text: 'You are about to delete the user for '+user.name+', please confirm this action ',            
+            showConfirmButton: true,
+            showCloseButton: true,
+            showCancelButton: true,            
+            confirmButtonText: "Confirm",
+            cancelButtonText: 'Cancel',        
+            color: '#0f172a',
+            iconColor: '#381529',
+            confirmButtonColor: '#308253',
+            cancelButtonColor: '#94a3b8',        
+        }).then(async (result) => {
+            if(result.isConfirmed){
+                // console.log("eliminado")
+                const userDeleted = await deleteUser(user.id)
+                if(userDeleted.success){
 
-        const userDeleted = await deleteUser(user.id)
+                    Swal.fire({
+                        icon: 'success',
+                        title: '<strong>User deleted successfully</strong>',
+                        text: 'User '+user.name+' was deleted from Resonance',            
+                        showConfirmButton: true,
+                        showCloseButton: true,                            
+                        confirmButtonText: "Great!",                          
+                        color: '#0f172a',
+                        iconColor: '#381529',
+                        confirmButtonColor: '#308253',
+                        cancelButtonColor: '#94a3b8',        
+                    }).then(result => {
+                        if(result.isConfirmed){
+                            window.location.replace('/dashboard/customers')
+                        }
+                    })
+                }
+            }
+        })
+        // console.log(typeof(user.id))
+        
+        // const userDeleted = await deleteUser(user.id)
 
         
     }
