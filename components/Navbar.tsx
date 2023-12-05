@@ -51,11 +51,8 @@ const Navbar  = (props : NavbarProps) => {
                     </div>
                     <div className="italic text-lg ml-2 w-32 w-[30vh]">
                         {status !== "authenticated" ? (
-                            <div className='flex justify-between'>
+                            <div className='flex justify-between'>                              
                                 
-                                <Link className='text-black hover:text-purple-700' href="/registration"> Registration</Link>                                 
-                                
-                                <p> | </p>
                                 <button
                                 className='hover:text-purple-700'
                                 onClick={() => signIn()}>

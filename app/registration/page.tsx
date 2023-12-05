@@ -8,8 +8,10 @@ const Registration : NextPage = () => {
 
     return (
         <SessionProvider>
-            <Navbar/>
-            <RegistrationForm/>
+            <Navbar>
+
+                <RegistrationForm/>
+            </Navbar>
         </SessionProvider>            
         
     )
