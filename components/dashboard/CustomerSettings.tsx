@@ -9,6 +9,7 @@ import { alerts, redirectionAlert } from "@/utils/alerts";
 const CustomerSettings = () => {
 
   const {data: session, status} = useSession()
+  const userAux : User = session?.user as User
   const { register, handleSubmit, formState: { errors }, reset } = useForm<User>({
     defaultValues: {
         id : '',
@@ -20,8 +21,8 @@ const CustomerSettings = () => {
   const onSubmit : SubmitHandler<User> = async(data) => {
     data = {
       ...data,
-      id : session?.user?.id!,
-      emailVerified : session?.user?.emailVerified
+      id : userAux.id,
+      emailVerified : userAux.emailVerified
   }
     console.log(data)
              
@@ -103,7 +104,7 @@ const CustomerSettings = () => {
               <label className="grid-span-1 font-YsabeauOffice italic text-xl ml-4">
                   Email Verified 
               </label>
-              {session.user?.emailVerified ? (
+              {userAux.emailVerified ? (
                 <BsFillCheckCircleFill className='justify-self-center self-center text-green-600'/>
               ) : (
                 <MdRadioButtonUnchecked className='justify-self-center self-center text-red-600'/>
@@ -111,7 +112,7 @@ const CustomerSettings = () => {
             </div>
             <div className="flex gap-1 mt-4 items-center justify-around w-[70vh]">
 
-              {!session.user?.emailVerified ? 
+              {!userAux.emailVerified ? 
               <button className="border rounded-lg bg-green-500 hover:bg-green-700 text-white p-4 font-YsabeauOffice italic justify-self-center">Verify your email</button>
               : null}
               <button className='border rounded-lg bg-purple-700 text-white p-4 font-YsabeauOffice italic justify-self-center' type='submit'>Save changes</button>

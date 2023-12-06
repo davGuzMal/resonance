@@ -87,15 +87,14 @@ export const CustomerDirectories = () => {
       }       
       setFilters({
         ... filters,
-        sort: e.target.value
+        sort: (e.target as HTMLButtonElement).value
       })      
     }
     //Use effect for update directories when there is a change in session status
-    useEffect(() => {   
-      console.log(status)
-      if(status==="authenticated") refetch
+    useEffect(() => {      
+      if(status!=="authenticated") refetch
         
-    }, [status === "authenticated"])
+    }, [status])
     //Use effect to visualize directories after filter or sort
     useEffect(() => {
       let aux : Directory[] | Array<any> | undefined
@@ -161,8 +160,7 @@ export const CustomerDirectories = () => {
     }, [filters])    
 
     //use Effect for save directories in local states once the query has had success
-    useEffect(() => {
-      console.log(directories)
+    useEffect(() => {      
       if(directories !==undefined){
 
         setAllDirectories(directories) 

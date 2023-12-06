@@ -1,10 +1,8 @@
 import React, { useEffect } from 'react'
-import {useSession} from 'next-auth/react'
 import { getDirectories } from '@/utils/dbQueries'
-import { Directory, Type } from '@/utils/interfaces'
+import { Directory } from '@/utils/interfaces'
 import { useQuery } from 'react-query'
 import Link from 'next/link'
-import { Session } from '@auth0/nextjs-auth0'
 
 type props = {
     session : any
@@ -17,8 +15,7 @@ export const TopCards = ({ session } : props) => {
         data: directories,
         error: error,
         isLoading : isLoading,
-        isSuccess : isSuccess,
-        refetch
+        isSuccess : isSuccess,        
     } = useQuery(['directories'], ()=>getDirectories(session?.user?.id!, session?.user?.email!))
     
     const getMostRecentUpdate = (array : Directory[]) => {

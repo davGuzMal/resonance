@@ -33,7 +33,7 @@ export const Filters = ({filters, setFilters} : props) => {
             }             
     }
     const reset = (e : MouseEvent<HTMLButtonElement>) => {
-        if (e.target.name === 'reset'){
+        if ((e.target as HTMLButtonElement).name === 'reset'){
             setFilters({
                 ...filters,
                 r : true
