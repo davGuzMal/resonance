@@ -3,7 +3,7 @@ import { Dialog, Transition } from '@headlessui/react'
 import { SubmitHandler, useForm } from "react-hook-form";
 import {useSession} from 'next-auth/react'
 import { alerts, redirectionAlert } from '@/utils/alerts';
-import { Directory } from '@/utils/interfaces';
+import { Directory, User } from '@/utils/interfaces';
 import { createDirectory } from '@/utils/dbQueries';
 
 
@@ -24,10 +24,10 @@ export const CreateDirectoryModal = ({isOpen, closeModal} : props) => {
 
     const onSubmit : SubmitHandler<Directory> = async(data) => {
         
-             
+        const userAux : User = session?.user as User
         data = {
             ...data,
-            userId : session?.user?.id!
+            userId : userAux.id
         }
         const newDirectory = await createDirectory(data)
         if(newDirectory){            
