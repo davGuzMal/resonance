@@ -1,5 +1,5 @@
 "use client";
-import { Directory } from '@/utils/interfaces';
+import { Directory, User } from '@/utils/interfaces';
 import { createDirectory } from '../utils/dbQueries';
 import { NextComponentType } from 'next'
 import {signIn, useSession} from 'next-auth/react'
@@ -19,10 +19,10 @@ const NewDirectory : NextComponentType = () => {
     
     const onSubmit : SubmitHandler<Directory> = async(data) => {
         
-             
+        const userAux : User = session?.user as User
         data = {
             ...data,
-            userId : session?.user?.id!
+            userId : userAux.id
         }
         const newDirectory = await createDirectory(data)
         if(newDirectory){
