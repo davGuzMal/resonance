@@ -1,7 +1,7 @@
 import React, { useEffect, useState, MouseEvent } from 'react'
 import {useSession} from 'next-auth/react'
 import {Tooltip} from "@nextui-org/react";
-import { Directory } from '@/utils/interfaces'
+import { Directory, User } from '@/utils/interfaces'
 import { useQuery } from 'react-query'
 // import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { getDirectories } from '@/utils/dbQueries'
@@ -33,25 +33,14 @@ export const CustomerDirectories = () => {
     //user session
     const { data: session, status } = useSession()
     //Query to get directories from db
-    // const queryClient = useQueryClient()
-    // const { 
-    //   isLoading, 
-    //   isError, 
-    //   isSuccess, 
-    //   data : directories, 
-    //   error, 
-    //   refetch } = useQuery({
-    //   queryKey: ['directories'],
-    //   queryFn: ()=>getDirectories(session?.user?.id!, session?.user?.email!),
-    // })
-    
+    const userAux : User = session?.user as User       
     const {
         data: directories,
         error: error,
         isLoading : isLoading,
         isSuccess : isSuccess,
         refetch
-    } = useQuery(['directories', status], ()=>getDirectories(session?.user?.id!, session?.user?.email!))
+    } = useQuery(['directories', status], ()=>getDirectories(userAux.id, session?.user?.email!))
     //open modal to see directory content
     const [isOpen, setIsOpen] = useState(false)
     const [isOpenAdd, setIsOpenAdd] = useState(false)
