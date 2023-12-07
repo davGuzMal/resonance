@@ -14,6 +14,8 @@ module.exports = {
       Lugrasimo : ['Lugrasimo', 'cursive']
     },
     screens: {
+      xxs : "250px",
+      xs: "420px",
       sm: "640px",
       md: "768px",
       lg: "1024px",

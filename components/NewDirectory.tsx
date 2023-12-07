@@ -71,8 +71,8 @@ const NewDirectory : NextComponentType = () => {
         )
     }
     return (
-        <div className="p-8 flex flex justify-between items-center -inset -skew-y-3 bg-gradient-to-r from-purple-300 via-gray-100 rounded-lg">
-            <div className='skew-y-3 font-EduSA bg-gradient-to-r from-blue-100 via-gray-100 w-1/2 h-[65vh] p-4 m-4 rounded lg'>                
+        <div className="p-8 flex xxs:flex-col md:flex-row justify-between items-center -inset -skew-y-3 bg-gradient-to-r from-purple-300 via-gray-100 rounded-lg xs:h-[auto]">
+            <div className='skew-y-3 font-EduSA bg-gradient-to-r from-blue-100 via-gray-100 w-auto h-auto p-4 m-4 rounded lg'>                
                 <p className='text-3xl mt-8'>Journaling helps control your symptoms and improve your mood by:</p>
                 <ul className='list-disc mt-8'>
                     <li className='text-xl'>Helping you <span>   </span>
@@ -117,10 +117,10 @@ const NewDirectory : NextComponentType = () => {
                     <p className='text-3xl mt-8'>Loading...</p>
                     :
                     
-                    <form className="grid grid-cols-2 w-full gap-4 justify-center items-center lg:gap-3"
+                    <form className="grid xs:grid-cols-1 md:grid-cols-2 w-full gap-2 justify-center items-center lg:gap-3"
                             onSubmit={handleSubmit(onSubmit)}>
                         {/* TITLE */}
-                        <div className="grid grid-span-1 gap-1 mx-4 items-start justify-center">
+                        <div className="grid grid-span-1 gap-1 items-start justify-start w-[auto]">
                             <label className="label">
                                 Title:
                             </label>
@@ -128,7 +128,7 @@ const NewDirectory : NextComponentType = () => {
                                 {...register('title', {
                                     required: true,
                                 })}
-                                className="ring-2 ring-purple-300 ring-inset rounded-lg "
+                                className="ring-2 ring-purple-300 ring-inset rounded-lg w-5/6"
                             />
                             {errors.title?.type === 'required' ? (
                                 <p className="text-red-500 text-xs italic">
@@ -137,7 +137,7 @@ const NewDirectory : NextComponentType = () => {
                             ) : null}                        
                         </div>
                         {/* TYPE */}
-                        <div className="grid grid-span-1 gap-1 mx-4 items-start justify-center">
+                        <div className="grid grid-span-1 gap-1 mx-2 items-start justify-start w-[auto]">
                             <label className="label">
                                 Type:
                             </label>
@@ -146,7 +146,7 @@ const NewDirectory : NextComponentType = () => {
                                 {...register('type', {
                                     required: true,
                                 })}
-                                className="ring-2 ring-purple-300 ring-inset rounded-lg "
+                                className="ring-2 ring-purple-300 ring-inset rounded-lg w-[auto]"
                                 defaultValue="Note"
                             >
                             <option value="NOTE">Note</option>
@@ -163,7 +163,7 @@ const NewDirectory : NextComponentType = () => {
                             ) : null}                        
                         </div>
                         {/* CONTENT */}
-                        <div className='grid grid-span-2 gap-1 col-span-2 mx-2 items-start justify-center'>
+                        <div className='grid xs:grid-span-1 md:grid-span-2 gap-1 xxs:col-span-1 xs:col-span-2 mx-2 items-start justify-center'>
                         <label className="label">
                                 Write your content here below:
                             </label>
@@ -184,7 +184,7 @@ const NewDirectory : NextComponentType = () => {
                         </div>
                         <button
                             type="submit"
-                            className="ml-16 justify-center text-center bg-purple-400 py-3 my-2 rounded-md shadow-xl  font-bold uppercase font-YsabeauInfant hover:bg-purple-800 hover:text-white transition-all">
+                            className="grid xxs:col-span-1 xs:col-span-2 text-center bg-purple-400 py-3 my-2 rounded-md shadow-xl uppercase font-YsabeauInfant hover:bg-purple-800 hover:text-white transition-all">
                             Save Directory
                         </button>
                     </form>
