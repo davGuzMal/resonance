@@ -12,9 +12,16 @@ const Header = ({page} : HeaderProps) => {
             <h2>{page}</h2>
             {status !=='authenticated' ? (
                 
-                <h2>Welcome back</h2>
+                <h2 className='xss:hidden xs:hidden sm:flex'>Welcome back</h2>
             ) : (
-                <h2>Welcome back, {session.user?.name?.slice(0, session.user?.name.indexOf(' ') > 0 ? session.user?.name.indexOf(' ') : session.user?.name.length)}</h2>
+                <div>
+
+                <h2 className='xxs:hidden xs:hidden sm:flex'>Welcome back</h2>
+                <h2 className='xxs:flex'>
+                    {session.user?.name?.slice(0, session.user?.name.indexOf(' ') > 0 ? session.user?.name.indexOf(' ') : session.user?.name.length)}
+                </h2>
+                </div>
+                
             )}
             
         </div>

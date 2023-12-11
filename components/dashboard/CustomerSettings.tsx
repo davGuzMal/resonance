@@ -5,6 +5,7 @@ import { BsFillCheckCircleFill } from "react-icons/bs";
 import { MdRadioButtonUnchecked } from "react-icons/md";
 import { updateUser } from "@/utils/dbQueries";
 import { alerts, redirectionAlert } from "@/utils/alerts";
+import { Image } from "@nextui-org/react";
 
 const CustomerSettings = () => {
 
@@ -28,7 +29,7 @@ const CustomerSettings = () => {
              
     const updatedUser = await updateUser(data)
     if(updatedUser){
-        console.log(updatedUser)
+        
         redirectionAlert({
                 icon: 'info',
             title: '<strong>User update</strong>',
@@ -49,30 +50,33 @@ const CustomerSettings = () => {
 }
 
   return (
-    <div className="flex justify-between bg-gray-100 min-h-screen p-4">
+    
       <div>
 
-      </div>
+      
       {status !== 'authenticated' ? (
         <div>
           <h1 className="font-YsabeauOffice italic text-3xl"> Please LogIn your account to modify settings</h1>
         </div>
       ) : session.user?.email ? (
 
-        <div className="flex justify-end">
-
+        <div className="flex">
+          <Image
+          className="border rounded-lg hidden lg:flex"          
+          alt="resonanceLogo"
+          src="http://localhost:3000/img/Resonance.png"
+          />
           <form onSubmit={handleSubmit(onSubmit)}>
-            <div className="grid grid-cols-2 gap-1 mt-16 mr-16 items-start justify-start w-[70vh]">
-                <label className="grid-span-1 font-YsabeauOffice italic text-xl mx-4">
+            <div className="grid grid-cols-2 gap-1 mt-16 mr-16 items-start justify-around w-[70vh]">
+                <label className="grid-span-1 font-YsabeauOffice italic text-xl">
                     Full Name:
                 </label>
                 <input
-                    placeholder={session.user?.name!}              
-                    // value = {session.user?.name!}
+                    placeholder={session.user?.name!}
                     {...register('name', {
                         required: true,
                     })}
-                    className="font-YsabeauOffice italic text-xl mr-4 min-w-[40vh]"
+                    className="font-YsabeauOffice italic text-xl mr-4 min-w-[43vh] border rounded-md border-purple-300"
 
                 />
                 {errors.name?.type === 'required' ? (
@@ -81,18 +85,17 @@ const CustomerSettings = () => {
                     </p>
                 ) : null}                        
             </div>
-            <div className="grid grid-cols-2 gap-1 mt-4 mr-16 items-start justify-start w-[70vh]">
-                <label className="grid-span-1 font-YsabeauOffice italic text-xl ml-4">
+            <div className="grid grid-cols-2 gap-1 mt-4 mr-16 items-start justify-around w-[70vh]">
+                <label className="grid-span-1 font-YsabeauOffice italic text-xl">
                     Email:
                 </label>
                 <input
-                    placeholder={session.user?.email!}
-                    // value = {session.user?.email!}
+                    placeholder={session.user?.email!}                    
                     {...register('email', {
                         required: true,
                     })}
-                    className="font-YsabeauOffice italic text-xl mr-4 min-w-[40vh]"
-
+                    className="font-YsabeauOffice italic text-xl mr-4 min-w-[43vh]"
+                    disabled
                 />
                 {errors.email?.type === 'required' ? (
                     <p className="text-red-500 text-xs italic">
@@ -100,8 +103,8 @@ const CustomerSettings = () => {
                     </p>
                 ) : null}                        
             </div>
-            <div className="grid grid-cols-2 gap-1 mt-4 items-start justify-start w-[70vh]">
-              <label className="grid-span-1 font-YsabeauOffice italic text-xl ml-4">
+            <div className="grid grid-cols-2 gap-1 mt-4 items-start justify-around w-[70vh]">
+              <label className="grid-span-1 font-YsabeauOffice italic text-xl">
                   Email Verified 
               </label>
               {userAux.emailVerified ? (

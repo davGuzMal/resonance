@@ -38,11 +38,15 @@ export const Filters = ({filters, setFilters} : props) => {
                 ...filters,
                 r : true
             })
+            Array.from(document.querySelectorAll("input")).forEach(
+                input => (input.value = "")
+              );
+            
         }  
     }
   return (
     <div  className='flex justify-around bg-gray-200 p-4 rounded-lg'>
-        <input className='rounded-lg w-1/2' onChange={(e)=>search(e)} placeholder='Search by name or description' type ='text' name='search'/>
+        <input className='rounded-lg w-1/2 hidden sm:flex' onChange={(e)=>search(e)} placeholder='Search by name or description' type ='text' name='search'/>
         <select className='rounded-lg' onChange={(e)=>search(e)} name='filter'>
             <option value='NOTE'>Note</option>
             <option value='JOURNAL'>Journal</option>

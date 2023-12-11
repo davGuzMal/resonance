@@ -32,14 +32,7 @@ export const CustomerList = () => {
             return null
         }
     }
-    const onDelete = async (user : User) => {
-        // alerts({
-        //     icon: 'warning',
-        //     title: '<strong>Are you sure of delete this user?</strong>',
-        //     html: 'You are about to delete the user for '+user.name+', please confirm this action ',
-        //     confirmButtonText: 'Confirm!',            
-        //     confirmButtonAriaLabel: 'Thumbs up, great!',            
-        // })
+    const onDelete = async (user : User) => {        
         Swal.fire({
             icon: 'warning',
             title: '<strong>Are you sure of delete this user?</strong>',
@@ -55,7 +48,7 @@ export const CustomerList = () => {
             cancelButtonColor: '#94a3b8',        
         }).then(async (result) => {
             if(result.isConfirmed){
-                // console.log("eliminado")
+                
                 const userDeleted = await deleteUser(user.id)
                 if(userDeleted.success){
 
@@ -78,10 +71,6 @@ export const CustomerList = () => {
                 }
             }
         })
-        // console.log(typeof(user.id))
-        
-        // const userDeleted = await deleteUser(user.id)
-
         
     }
 
@@ -91,24 +80,24 @@ export const CustomerList = () => {
   return (
     <div className='bg-gray-100 min-h-screen p-4'>
         <div className='font-YsabeauInfant text-xl w-full m-auto p-4 border rounded-lg bg-white overflow-y-auto'>
-            <div className='my-3 p-2 grid md:grid-cols-4 sm:grid-cols-3 grid-cols-2 items-center justify-between'>
+            <div className='my-3 p-2 grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 items-center justify-between'>
                 <span className='ml-16'>Name</span>
-                <span className='sm:text-left text-right ml-8'>Email</span>
-                <span className='hidden md:grid'>Last Directory</span>
-                <span className='hidden md:grid'>Account verified</span>
+                <span className='sm:text-left text-right ml-8 hidden md:grid'>Email</span>
+                <span className='hidden lg:grid'>Last Directory</span>
+                <span className='hidden sm:grid'>Account verified</span>
             </div>
             <ul>
                 {users?.map((user, id)=>(
-                    <li key={id} className='bg-gray-50 hover:bg-gray-100 rounded-lg my-3 p-2 grid md:grid-cols-4 sm:grid-cols-3 grid-cols-2 items-center justify-between cursos-pointer'>
+                    <li key={id} className='bg-gray-50 hover:bg-gray-100 rounded-lg my-3 p-2 grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 items-center justify-between cursor-pointer'>
                         <div className='flex items-center'>
                             <div className='bg-purple-100 p-3 rounded-lg'>
                                 <BsPersonFill className='bg-purple-800'/>
                             </div>
                             <p className='pl-4'>{user.name}</p>
                         </div>
-                        <p className='text-gray-600 sm:text-left text-right'>{user.email}</p>
-                        <p className='hidden md:flex'>{getMostRecentUpdate(user.directories)}</p>
-                        <div className='sm:flex hidden justify-between items-center ml-16'>                            
+                        <p className='text-gray-600 sm:text-left text-right hidden md:grid'>{user.email}</p>
+                        <p className='hidden lg:grid'>{getMostRecentUpdate(user.directories)}</p>
+                        <div className='sm:flex hidden justify-around'>                            
                             {user.emailVerified 
                             ? <BsFillCheckCircleFill className='text-green-600'/>
                             : <MdRadioButtonUnchecked className='text-red-600'/>}
@@ -117,7 +106,7 @@ export const CustomerList = () => {
                                     Delete user
                                 </div>
                             }>              
-                                <FaMinusCircle className='text-red-600' name='delete' onClick={() => onDelete(user)}/>             
+                                <FaMinusCircle className='text-red-600 items-end' name='delete' onClick={() => onDelete(user)}/>             
                             </Tooltip>                 
                         </div>
                     </li>

@@ -68,7 +68,7 @@ export const RecentDirectories = ({ session } : props) => {
         {isLoading ? null :
         (
 
-        <div className='w-full col-span-1 relative lg:h-[50vh] h-[40vh] m-auto p-4 rounded-lg bg-white overflow-scroll'>            
+        <div className='w-full col-span-1 relative md:h-[50vh] h-[40vh] m-auto p-4 rounded-lg bg-white overflow-scroll'>            
             <h1>
                 <ul>
                     {recentDir?.map((dir, id) => (

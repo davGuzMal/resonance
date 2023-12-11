@@ -3,7 +3,6 @@ import {useSession} from 'next-auth/react'
 import {Tooltip} from "@nextui-org/react";
 import { Directory, User } from '@/utils/interfaces'
 import { useQuery } from 'react-query'
-// import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { getDirectories } from '@/utils/dbQueries'
 import { BiNotepad } from 'react-icons/bi'
 import { BsJournalBookmark } from 'react-icons/bs'
@@ -181,7 +180,7 @@ export const CustomerDirectories = () => {
             filters = {filters}
             setFilters = {setFilters}
           /> 
-            <div className='my-3 p-2 grid md:grid-cols-4 sm:grid-cols-3 grid-cols-2 items-center justify-between'>
+            <div className='my-3 p-2 grid md:grid-cols-4 sm:grid-cols-3 xs:grid-cols-2 grid-cols-1 items-center justify-between'>
               <span className='flex'>
                 <Tooltip color='secondary' placement='top' offset={-2} content={
                   <div className='font-YsabeauOffice'>Add new directory</div>
@@ -190,7 +189,7 @@ export const CustomerDirectories = () => {
                 </Tooltip>
                 <button className='ml-16' value='title' onClick={(e)=>sortBy(e)}>Title</button>
               </span>
-              <span className='sm:text-left text-right'><button className='ml-8'>Content</button></span>
+              <span className='xxs:text-left text-right hidden xs:flex'><button className='ml-8'>Content</button></span>
               <span className='hidden md:grid'><button value = 'updateDate' onClick={(e)=>sortBy(e)} className='text-left'>Last update</button></span>
               <span className='sm:flex hidden md:grid'><button value = 'type'className='text-left' onClick={(e)=>sortBy(e)}>Type</button></span>
             </div>
@@ -205,7 +204,7 @@ export const CustomerDirectories = () => {
             />
             <ul>
                     {showedDirectories?.map((dir, id)=>(
-                        <li key={id} className='bg-gray-50 hover:bg-gray-100 rounded-lg my-3 p-2 grid md:grid-cols-4 sm:grid-cols-3 grid-cols-2 items-center justify-between cursos-pointer'>
+                        <li key={id} className='bg-gray-50 hover:bg-gray-100 rounded-lg my-3 p-2 grid md:grid-cols-4 sm:grid-cols-3 xs:grid-cols-2 grid-cols-1 items-center justify-between cursos-pointer'>
                             <div className='flex items-center'>
                                 <div className='bg-purple-100 p-3 rounded-lg'>
                                     {dir.type === 'NOTE' ? (<BiNotepad className='text-purple-800'/>)
@@ -218,7 +217,7 @@ export const CustomerDirectories = () => {
                                 </div>
                                 <p className='pl-4'>{dir.title}</p>
                             </div>
-                            <p className='text-gray-600 sm:text-left text-right'><button name='show'onClick={()=>openModal(dir)}>{dir.content.slice(0,20)} ...</button></p>
+                            <p className='text-gray-600 sm:text-left text-right hidden xs:flex'><button name='show'onClick={()=>openModal(dir)}>{dir.content.slice(0,20)} ...</button></p>
                             <p className='hidden md:flex'>{dir.updateDate.toString().slice(0, dir.updateDate.toString().indexOf('T'))}</p>
                             <p className='sm:flex hidden justify-between items-center'>{dir.type}</p>
                         </li>
