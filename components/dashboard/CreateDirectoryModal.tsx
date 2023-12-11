@@ -96,10 +96,10 @@ export const CreateDirectoryModal = ({isOpen, closeModal} : props) => {
                   <Dialog.Description
                   className="text-lg text-justify font-medium leading-6 text-gray-900"
                   >
-                    <form className="grid grid-cols-2 w-full gap-4 justify-center items-center lg:gap-3"
+                    <form className="grid sm:grid-cols-2 grid-cols-1 w-full gap-4 justify-center items-center sm:items-center sm:justify-center lg:gap-3"
                             onSubmit={handleSubmit(onSubmit)}>
                         {/* TITLE */}
-                        <div className="grid grid-span-1 gap-1 mx-4 items-start justify-center">
+                        <div className="grid col-span-1 gap-1 items-start justify-start w-auto">
                             <label className="label">
                                 Title:
                             </label>
@@ -107,7 +107,7 @@ export const CreateDirectoryModal = ({isOpen, closeModal} : props) => {
                                 {...register('title', {
                                     required: true,
                                 })}
-                                className="ring-2 ring-purple-300 ring-inset rounded-lg "
+                                className="ring-2 ring-purple-300 ring-inset rounded-lg"
                             />
                             {errors.title?.type === 'required' ? (
                                 <p className="text-red-500 text-xs italic">
@@ -116,7 +116,7 @@ export const CreateDirectoryModal = ({isOpen, closeModal} : props) => {
                             ) : null}                        
                         </div>
                         {/* TYPE */}
-                        <div className="grid grid-span-1 gap-1 mx-4 items-start justify-center">
+                        <div className="grid col-span-1 gap-1 mx-2 items-start justify-start sm:items-center sm:justify-center w-auto">
                             <label className="label">
                                 Type:
                             </label>
@@ -142,7 +142,7 @@ export const CreateDirectoryModal = ({isOpen, closeModal} : props) => {
                             ) : null}                        
                         </div>
                         {/* CONTENT */}
-                        <div className='grid grid-span-2 gap-1 col-span-2 mx-2 items-start justify-center'>
+                        <div className='grid gap-1 xxs:col-span-1 xs:col-span-2 mx-2 items-start justify-center'>
                         <label className="label">
                                 Write your content here below:
                             </label>
@@ -163,7 +163,7 @@ export const CreateDirectoryModal = ({isOpen, closeModal} : props) => {
                         </div>                        
                         <button
                             type="submit"
-                            className="text-center bg-purple-400 mx-[15vh] w-[200px] py-3 my-2 rounded-md shadow-xl font-bold uppercase font-YsabeauInfant hover:bg-purple-800 hover:text-white transition-all">
+                            className="grid xxs:col-span-1 xs:col-span-2 text-center bg-purple-400 py-3 my-2 rounded-md shadow-xl uppercase font-YsabeauInfant hover:bg-purple-800 hover:text-white transition-all">
                             Save Directory
                         </button>
                     </form>

@@ -49,7 +49,7 @@ const Navbar  = (props : NavbarProps) => {
                         
                         
                     </div>
-                    <div className="italic text-lg ml-2 xs:w-[15vw]">
+                    <div className="italic text-lg mr-4 xs:w-[15vw]">
                         {status !== "authenticated" ? (
                             <div className='flex justify-between'>                              
                                 
@@ -71,7 +71,7 @@ const Navbar  = (props : NavbarProps) => {
                                                     size="lg"
                                                     color="secondary"
                                                     name={session?.user?.name?.slice(0, session.user.name.indexOf(' '))}
-                                                    description={session.user.email ? session.user.email : undefined}
+                                                    // description={session.user.email ? session.user.email : undefined}
                                                     src={session?.user?.image}                                                     
                                                 />                                      
                                             </Dropdown.Trigger>

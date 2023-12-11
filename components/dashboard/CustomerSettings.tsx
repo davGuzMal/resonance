@@ -51,8 +51,7 @@ const CustomerSettings = () => {
 
   return (
     
-      <div>
-
+      <div className="flex w-auto">
       
       {status !== 'authenticated' ? (
         <div>
@@ -60,15 +59,15 @@ const CustomerSettings = () => {
         </div>
       ) : session.user?.email ? (
 
-        <div className="flex">
+        <div className="flex max-w-[60vw] w-auto">
           <Image
           className="border rounded-lg hidden lg:flex"          
           alt="resonanceLogo"
           src="http://localhost:3000/img/Resonance.png"
           />
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <div className="grid grid-cols-2 gap-1 mt-16 mr-16 items-start justify-around w-[70vh]">
-                <label className="grid-span-1 font-YsabeauOffice italic text-xl">
+          <form  onSubmit={handleSubmit(onSubmit)}>
+            <div className="grid md:grid-cols-2 grid-cols-1 gap-1 mt-16 mr-16 items-start justify-around max-w-[70vh] w-auto">
+                <label className="flex font-YsabeauOffice italic md:text-xl text-lg">
                     Full Name:
                 </label>
                 <input
@@ -76,7 +75,7 @@ const CustomerSettings = () => {
                     {...register('name', {
                         required: true,
                     })}
-                    className="font-YsabeauOffice italic text-xl mr-4 min-w-[43vh] border rounded-md border-purple-300"
+                    className="font-YsabeauOffice italic mr-4 md:text-xl text-lg w-auto min-w-[43vh] border rounded-md border-purple-300"
 
                 />
                 {errors.name?.type === 'required' ? (
@@ -85,17 +84,18 @@ const CustomerSettings = () => {
                     </p>
                 ) : null}                        
             </div>
-            <div className="grid grid-cols-2 gap-1 mt-4 mr-16 items-start justify-around w-[70vh]">
-                <label className="grid-span-1 font-YsabeauOffice italic text-xl">
+            <div className="grid md:grid-cols-2 grid-cols-1 gap-1 mt-4 mr-16 items-start justify-around max-w-[70vh] w-auto">
+                <label className="grid-span-1 font-YsabeauOffice italic md:text-xl text-lg">
                     Email:
                 </label>
                 <input
                     placeholder={session.user?.email!}                    
+                    value = {session.user?.email!}
                     {...register('email', {
                         required: true,
                     })}
-                    className="font-YsabeauOffice italic text-xl mr-4 min-w-[43vh]"
-                    disabled
+                    className="font-YsabeauOffice italic mr-4 md:text-xl text-lg w-auto min-w-[43vh] border rounded-md border-purple-300"
+                    
                 />
                 {errors.email?.type === 'required' ? (
                     <p className="text-red-500 text-xs italic">
@@ -103,8 +103,8 @@ const CustomerSettings = () => {
                     </p>
                 ) : null}                        
             </div>
-            <div className="grid grid-cols-2 gap-1 mt-4 items-start justify-around w-[70vh]">
-              <label className="grid-span-1 font-YsabeauOffice italic text-xl">
+            <div className="flex gap-1 mt-4 items-start justify-between max-w-[70vh] w-auto">
+              <label className="flex font-YsabeauOffice italic md:text-xl text-lg">
                   Email Verified 
               </label>
               {userAux.emailVerified ? (
@@ -113,7 +113,7 @@ const CustomerSettings = () => {
                 <MdRadioButtonUnchecked className='justify-self-center self-center text-red-600'/>
               )}
             </div>
-            <div className="flex gap-1 mt-4 items-center justify-around w-[70vh]">
+            <div className="flex gap-1 mt-4 items-center justify-around w-auto max-w-[40vw]">
 
               {!userAux.emailVerified ? 
               <button className="border rounded-lg bg-green-500 hover:bg-green-700 text-white p-4 font-YsabeauOffice italic justify-self-center">Verify your email</button>
