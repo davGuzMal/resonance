@@ -5,7 +5,7 @@ import { BsFillCheckCircleFill } from "react-icons/bs";
 import { MdRadioButtonUnchecked } from "react-icons/md";
 import { updateUser } from "@/utils/dbQueries";
 import { alerts, redirectionAlert } from "@/utils/alerts";
-import { Image } from "@nextui-org/react";
+import Image from 'next/image';
 
 const CustomerSettings = () => {
 
@@ -59,11 +59,13 @@ const CustomerSettings = () => {
         </div>
       ) : session.user?.email ? (
 
-        <div className="flex max-w-[60vw] w-auto">
+        <div className="flex w-auto">
           <Image
-          className="border rounded-lg hidden lg:flex"          
+          className="mx-16 rounded-lg hidden lg:flex"          
           alt="resonanceLogo"
-          src="http://localhost:3000/img/Resonance.png"
+          src="/img/Resonance.png"
+          width={408}
+          height={214}
           />
           <form  onSubmit={handleSubmit(onSubmit)}>
             <div className="grid md:grid-cols-2 grid-cols-1 gap-1 mt-16 mr-16 items-start justify-around max-w-[70vh] w-auto">

@@ -205,7 +205,7 @@ export const CustomerDirectories = () => {
             <ul>
                     {showedDirectories?.map((dir, id)=>(
                         <li key={id} className='bg-gray-50 hover:bg-gray-100 rounded-lg my-3 p-2 grid md:grid-cols-4 sm:grid-cols-3 xs:grid-cols-2 grid-cols-1 items-center justify-between cursos-pointer'>
-                            <div className='flex items-center'>
+                            <div className='flex items-center' onClick={()=>openModal(dir)}>
                                 <div className='bg-purple-100 p-3 rounded-lg'>
                                     {dir.type === 'NOTE' ? (<BiNotepad className='text-purple-800'/>)
                                     :dir.type === 'JOURNAL' ? (<BsJournalBookmark className='text-purple-800'/>)
