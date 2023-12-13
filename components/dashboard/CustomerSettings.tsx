@@ -63,7 +63,7 @@ const CustomerSettings = () => {
           <Image
           className="mx-16 rounded-lg hidden lg:flex"          
           alt="resonanceLogo"
-          src="/img/Resonance.png"
+          src="/img/resonanceApp.png"
           width={408}
           height={214}
           />

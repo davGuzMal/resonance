@@ -37,7 +37,7 @@ export const TopCards = ({ session } : props) => {
     {isLoading ? (
         <h2>Loading...</h2>
     ):(
-        <div className='grid lg:grid-cols-6 gap4 p-4'>
+        <div className='grid lg:grid-cols-6 gap-4 p-4'>
             {type.map((t, id) =>            
                 <Link href={{
                     pathname : "/dashboard/directories",
